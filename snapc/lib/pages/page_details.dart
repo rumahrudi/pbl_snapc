@@ -124,7 +124,7 @@ class _PageDetailsState extends State<PageDetails> {
 
                   // * button
                   MyButton(
-                    text: 'Book Now',
+                    text: 'Add To Cart',
                     onTap: () => addPhotoPackageToCart(widget.photo),
                   )
                 ],

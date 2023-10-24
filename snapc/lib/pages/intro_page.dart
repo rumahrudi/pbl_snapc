@@ -59,7 +59,7 @@ class IntroPage extends StatelessWidget {
               ),
               // * start now
               MyButton(
-                text: 'Shop Now',
+                text: 'Book Now',
                 onTap: () {
                   Navigator.push(
                       context,

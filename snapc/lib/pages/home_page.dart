@@ -43,15 +43,15 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.shopping_bag_rounded,
-              color: secondaryColor,
-            ),
-          )
-        ],
+        // actions: [
+        //   IconButton(
+        //     onPressed: () {},
+        //     icon: Icon(
+        //       Icons.shopping_bag_rounded,
+        //       color: secondaryColor,
+        //     ),
+        //   )
+        // ],
         leading: Builder(
           builder: (context) => IconButton(
             onPressed: () {
@@ -66,14 +66,14 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        title: Center(
-          child: Text(
-            'Snap Cuisine',
-            style: GoogleFonts.dmSerifDisplay(
-              color: Colors.black,
-            ),
-          ),
-        ),
+        // title: Center(
+        //   child: Text(
+        //     'Snap Cuisine',
+        //     style: GoogleFonts.dmSerifDisplay(
+        //       color: Colors.black,
+        //     ),
+        //   ),
+        // ),
       ),
       drawer: Drawer(
         backgroundColor: secondaryColor,
@@ -87,6 +87,14 @@ class _HomePageState extends State<HomePage> {
                   child: Image.asset(
                     'lib/images/logo.png',
                     color: Colors.white,
+                  ),
+                ),
+                // * title
+                Text(
+                  'Snap Cuisine',
+                  style: GoogleFonts.dmSerifDisplay(
+                    color: Colors.white,
+                    fontSize: 28,
                   ),
                 ),
                 Padding(
