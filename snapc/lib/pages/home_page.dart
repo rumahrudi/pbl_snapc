@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:snapc/components/botttom_nav_bar.dart';
-import 'package:snapc/models/cart.dart';
+// import 'package:snapc/models/cart.dart';
 import 'package:snapc/pages/cart_page.dart';
-import 'package:snapc/pages/page_details.dart';
+// import 'package:snapc/pages/page_details.dart';
 import 'package:snapc/pages/shop_page.dart';
 import 'package:snapc/theme/colors.dart';
 

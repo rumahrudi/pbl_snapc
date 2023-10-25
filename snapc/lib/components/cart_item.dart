@@ -54,8 +54,13 @@ class _CartItemState extends State<CartItem> {
         leading: Image.asset(widget.photo.imagePath),
         title: Text(widget.photo.name),
         subtitle: Text(widget.photo.price),
-        trailing:
-            IconButton(onPressed: removeItemFromCart, icon: Icon(Icons.delete)),
+        trailing: IconButton(
+          onPressed: removeItemFromCart,
+          icon: Icon(
+            Icons.delete,
+            color: secondaryColor,
+          ),
+        ),
       ),
     );
   }
