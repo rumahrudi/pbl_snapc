@@ -1,11 +1,14 @@
 # pbl_snapc
 Aplikasi Mobile Studio Gallery
 
-# details
-Judul Besar: Aplikasi Mobile Studio Gallery
-Manpro: Alena Uperiati, S.t, M.cs.
-Nama Tim: PBL-MJ512
-Judul Tim: MJ 5 kelas A Malam
+# Judul Besar: 
+Aplikasi Mobile Studio Gallery
+# Manpro: 
+Alena Uperiati, S.t, M.cs.
+# Nama Tim: 
+PBL-MJ512
+# Judul Tim: 
+MJ 5 kelas A Malam
 
 # member
 4312111006	Rudi Hariadi (ketua)
