@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 import 'package:snapc/components/botttom_nav_bar.dart';
+import 'package:snapc/components/my_drawer.dart';
+import 'package:snapc/components/navigation_utils.dart';
 // import 'package:snapc/models/cart.dart';
 import 'package:snapc/pages/cart_page.dart';
 // import 'package:snapc/pages/page_details.dart';
@@ -43,15 +45,15 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        // actions: [
-        //   IconButton(
-        //     onPressed: () {},
-        //     icon: Icon(
-        //       Icons.shopping_bag_rounded,
-        //       color: secondaryColor,
-        //     ),
-        //   )
-        // ],
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.shopping_bag_rounded,
+              color: secondaryColor,
+            ),
+          )
+        ],
         leading: Builder(
           builder: (context) => IconButton(
             onPressed: () {
@@ -66,100 +68,10 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        // title: Center(
-        //   child: Text(
-        //     'Snap Cuisine',
-        //     style: GoogleFonts.dmSerifDisplay(
-        //       color: Colors.black,
-        //     ),
-        //   ),
-        // ),
       ),
-      drawer: Drawer(
-        backgroundColor: secondaryColor,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              children: [
-                // * Logo
-                DrawerHeader(
-                  child: Image.asset(
-                    'lib/images/logo.png',
-                    color: Colors.white,
-                  ),
-                ),
-                // * title
-                Text(
-                  'Snap Cuisine',
-                  style: GoogleFonts.dmSerifDisplay(
-                    color: Colors.white,
-                    fontSize: 28,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
-                  child: Divider(
-                    color: thirdColor,
-                  ),
-                ),
-                // * Other Page
-                const Padding(
-                  padding: EdgeInsets.only(left: 25),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.home,
-                      color: Colors.white,
-                    ),
-                    title: Text(
-                      'Home',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 25),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.person,
-                      color: Colors.white,
-                    ),
-                    title: Text(
-                      'Profile',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 25),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.info,
-                      color: Colors.white,
-                    ),
-                    title: Text(
-                      'About',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 25),
-              child: ListTile(
-                leading: Icon(
-                  Icons.logout,
-                  color: Colors.white,
-                ),
-                title: Text(
-                  'Logout',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
-          ],
-        ),
+      drawer: MyDrawer(
+        onProfileTap: () => goToProfilePage(context),
+        onAboutTap: () => goToAboutPage(context),
       ),
       body: _pages[_selectedIndex],
     );

@@ -9,14 +9,12 @@ import 'package:snapc/pages/checkout_page.dart';
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
 
-  void navigateToCheckoutPage(BuildContext context, int index) {
-    Photo selectedPhoto =
-        Provider.of<Cart>(context, listen: false).getPhotoList()[index];
+  void navigateToCheckoutPage(BuildContext context, Photo photo) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => CheckoutPage(
-          photo: selectedPhoto,
+          photo: photo,
         ),
       ),
     );
@@ -46,7 +44,8 @@ class CartPage extends StatelessWidget {
                   Photo individualPhotoPackage = value.getUserCart()[index];
                   // * Return the cart item
                   return GestureDetector(
-                    onTap: () => navigateToCheckoutPage(context, index),
+                    onTap: () =>
+                        navigateToCheckoutPage(context, individualPhotoPackage),
                     child: CartItem(
                       photo: individualPhotoPackage,
                     ),

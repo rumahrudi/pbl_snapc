@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:snapc/components/my_app_bar.dart';
 import 'package:snapc/models/photo.dart';
 import 'package:snapc/theme/colors.dart';
 
@@ -15,17 +16,16 @@ class _CheckoutPageState extends State<CheckoutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        foregroundColor: Colors.grey[900],
-      ),
+      backgroundColor: Colors.grey[300],
+      appBar: const MyAppBar(text: 'Checkout'),
       body: Column(
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 25,
+                vertical: 25,
+              ),
               child: ListView(
                 children: [
                   //* title page
@@ -33,7 +33,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     'Checkout',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 28,
+                      fontSize: 20,
                     ),
                   ),
                   SizedBox(

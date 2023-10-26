@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:snapc/components/my_app_bar.dart';
 import 'package:snapc/components/my_button.dart';
 import 'package:snapc/models/photo.dart';
 import 'package:snapc/models/cart.dart';
@@ -41,11 +42,8 @@ class _PageDetailsState extends State<PageDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        foregroundColor: Colors.grey[900],
-      ),
+      backgroundColor: Colors.grey[300],
+      appBar: MyAppBar(text: 'Package Detail'),
       body: Column(
         children: [
           Expanded(
@@ -53,6 +51,9 @@ class _PageDetailsState extends State<PageDetails> {
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: ListView(
                 children: [
+                  SizedBox(
+                    height: 25,
+                  ),
                   Image.asset(
                     widget.photo.imagePath,
                     height: 150,
