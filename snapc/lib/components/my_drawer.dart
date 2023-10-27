@@ -1,13 +1,38 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:snapc/components/my_list_tile.dart';
 import 'package:snapc/theme/colors.dart';
 
+import '../auth/auth.dart';
+
 class MyDrawer extends StatelessWidget {
   final void Function()? onProfileTap;
   final void Function()? onAboutTap;
-  const MyDrawer(
-      {super.key, required this.onProfileTap, required this.onAboutTap});
+  const MyDrawer({
+    super.key,
+    required this.onProfileTap,
+    required this.onAboutTap,
+  });
+
+  // void signOut(BuildContext context) async {
+  //   try {
+  //     await FirebaseAuth.instance.signOut();
+  //     Navigator.of(context).pushReplacement(
+  //         MaterialPageRoute(builder: (context) => const AuthPage()));
+  //   } catch (e) {
+  //     print('Error during sign out: $e');
+  //   }
+  // }
+
+  void signOut(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => const AuthPage(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +85,9 @@ class MyDrawer extends StatelessWidget {
           MyListTile(
             icon: Icons.logout,
             text: 'L O G O U T',
-            onTap: () {},
+            onTap: () {
+              signOut(context);
+            },
           ),
         ],
       ),

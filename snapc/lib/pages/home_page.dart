@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
 import 'package:snapc/components/botttom_nav_bar.dart';
 import 'package:snapc/components/my_drawer.dart';
 import 'package:snapc/components/navigation_utils.dart';
-// import 'package:snapc/models/cart.dart';
 import 'package:snapc/pages/cart_page.dart';
-// import 'package:snapc/pages/page_details.dart';
 import 'package:snapc/pages/shop_page.dart';
 import 'package:snapc/theme/colors.dart';
 
@@ -35,6 +32,10 @@ class _HomePageState extends State<HomePage> {
     const CartPage(),
   ];
 
+  // void signOut() {
+  //   FirebaseAuth.instance.signOut();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +50,7 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             onPressed: () {},
             icon: Icon(
-              Icons.shopping_bag_rounded,
+              Icons.shopping_bag,
               color: secondaryColor,
             ),
           )

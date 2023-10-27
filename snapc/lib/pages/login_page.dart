@@ -1,19 +1,52 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:snapc/components/my_button.dart';
 import 'package:snapc/components/my_textfield.dart';
-import 'package:snapc/pages/home_page.dart';
-import 'package:snapc/pages/register_page.dart';
+import 'package:snapc/theme/colors.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+class LoginPage extends StatefulWidget {
+  final Function()? onTap;
+  LoginPage({
+    super.key,
+    required this.onTap,
+  });
 
-  // text editing controller
-  final usernameController = TextEditingController();
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  //* text editing controller
+  final emailController = TextEditingController();
+
   final passwordController = TextEditingController();
 
-  // sign in user
+  //* sign in user
+  void signIn() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+    } on FirebaseAuthException catch (e) {
+      displayMessage(e.code);
+    }
+  }
 
-  void signUserIn() {}
+  void displayMessage(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: secondaryColor,
+        title: Center(
+          child: Text(
+            message,
+            style: const TextStyle(color: Colors.white),
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +63,7 @@ class LoginPage extends StatelessWidget {
                     const SizedBox(
                       height: 50,
                     ),
-                    // logo
-                    // const Icon(
-                    //   Icons.lock,
-                    //   color: Color.fromRGBO(244, 153, 26, 1.0),
-                    //   size: 100,
-                    // ),
+
                     Image.asset(
                       'lib/images/logo.png',
                       width: 150,
@@ -59,7 +87,7 @@ class LoginPage extends StatelessWidget {
                     ),
                     // username
                     MyTextField(
-                      controller: usernameController,
+                      controller: emailController,
                       hintText: 'Username',
                       obsecureText: false,
                     ),
@@ -93,19 +121,12 @@ class LoginPage extends StatelessWidget {
                     ),
                     //* sign in button
                     MyButton(
-                      text: 'Login',
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => HomePage(),
-                          ),
-                        );
-                      },
+                      text: 'Sign In',
+                      onTap: signIn,
                     ),
 
                     const SizedBox(
-                      height: 50,
+                      height: 25,
                     ),
 
                     //* not a memeber ? register now
@@ -121,16 +142,9 @@ class LoginPage extends StatelessWidget {
                           width: 4,
                         ),
                         GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => RegisterPage(),
-                              ),
-                            );
-                          },
+                          onTap: widget.onTap,
                           child: Text(
-                            'Register Now',
+                            'Register now',
                             style: TextStyle(
                               color: Colors.blue,
                               fontWeight: FontWeight.bold,

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "12093340426",
+    "project_id": "authgallery-85d51",
+    "storage_bucket": "authgallery-85d51.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:12093340426:android:0fc146d12478068edd98f3",
+        "android_client_info": {
+          "package_name": "com.example.myapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaYIRGlk8PCIeDQN2oqVdgwGFpSAiBo8c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:12093340426:android:0a59c1d5f9e234ebdd98f3",
+        "android_client_info": {
+          "package_name": "com.example.snapc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaYIRGlk8PCIeDQN2oqVdgwGFpSAiBo8c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

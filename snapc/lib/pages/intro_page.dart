@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:snapc/components/my_button.dart';
+import 'package:snapc/pages/home_page.dart';
 // import 'package:snapc/pages/home_page.dart';
-import 'package:snapc/pages/login_page.dart';
 
 class IntroPage extends StatelessWidget {
   const IntroPage({super.key});
@@ -63,10 +63,11 @@ class IntroPage extends StatelessWidget {
                 text: 'Book Now',
                 onTap: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LoginPage(),
-                      ));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HomePage(),
+                    ),
+                  );
                 },
               )
             ],
