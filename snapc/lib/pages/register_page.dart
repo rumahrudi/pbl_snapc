@@ -1,18 +1,70 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:snapc/components/my_button.dart';
 import 'package:snapc/components/my_textfield.dart';
+import 'package:snapc/theme/colors.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
   final Function()? onTap;
   RegisterPage({
     super.key,
     required this.onTap,
   });
 
-  // text editing controller
-  final usernameController = TextEditingController();
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  //* text editing controller
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+
+  void signUp() async {
+    // * show loading circe
+    showDialog(
+      context: context,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+
+    // * make sure password match
+    if (passwordController.text != confirmPasswordController.text) {
+      // * pop loading circle
+      Navigator.pop(context);
+      // * show eror to user
+      displayMessage('Password don`t match');
+      return;
+    }
+
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text, password: passwordController.text);
+      if (context.mounted) Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+      // * pop loading circle
+      Navigator.pop(context);
+      // * show eror to user
+      displayMessage(e.code);
+    }
+  }
+
+  void displayMessage(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: secondaryColor,
+        title: Center(
+          child: Text(
+            message,
+            style: const TextStyle(color: Colors.white),
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +105,7 @@ class RegisterPage extends StatelessWidget {
                     ),
                     // username
                     MyTextField(
-                      controller: usernameController,
+                      controller: emailController,
                       hintText: 'Username',
                       obsecureText: false,
                     ),
@@ -84,7 +136,7 @@ class RegisterPage extends StatelessWidget {
                     //* sign in button
                     MyButton(
                       text: 'Sign Up',
-                      onTap: () {},
+                      onTap: signUp,
                     ),
 
                     const SizedBox(
@@ -104,7 +156,7 @@ class RegisterPage extends StatelessWidget {
                           width: 4,
                         ),
                         GestureDetector(
-                          onTap: onTap,
+                          onTap: widget.onTap,
                           child: Text(
                             'Login now',
                             style: TextStyle(
