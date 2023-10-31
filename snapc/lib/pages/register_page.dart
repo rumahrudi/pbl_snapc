@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:snapc/components/my_button.dart';
 import 'package:snapc/components/my_textfield.dart';
@@ -22,7 +24,14 @@ class _RegisterPageState extends State<RegisterPage> {
   final confirmPasswordController = TextEditingController();
 
   void signUp() async {
-    // * show loading circe
+    // * make sure password match
+    if (passwordController.text != confirmPasswordController.text) {
+      // * show error to user
+      displayMessage('Passwords don`t match');
+      return;
+    }
+
+    // * show loading circle
     showDialog(
       context: context,
       builder: (context) => const Center(
@@ -30,23 +39,28 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
 
-    // * make sure password match
-    if (passwordController.text != confirmPasswordController.text) {
-      // * pop loading circle
-      Navigator.pop(context);
-      // * show eror to user
-      displayMessage('Password don`t match');
-      return;
-    }
-
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text, password: passwordController.text);
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+
+      // * create doc in Firestore called Users
+      FirebaseFirestore.instance
+          .collection('Users')
+          .doc(userCredential.user!.email!)
+          .set({
+        'username': emailController.text.split('@')[0],
+        'bio': 'Empty bio ...'
+      });
+
+      // * pop loading circle
       if (context.mounted) Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
-      // * pop loading circle
+      // * close loading circle
       Navigator.pop(context);
-      // * show eror to user
+      // * show error to user
       displayMessage(e.code);
     }
   }

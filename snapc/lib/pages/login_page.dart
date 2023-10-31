@@ -29,10 +29,10 @@ class _LoginPageState extends State<LoginPage> {
         password: passwordController.text,
       );
       // * pop loading circle
-      if (context.mounted) Navigator.pop(context);
+      // if (context.mounted) Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       // * pop loading circle
-      Navigator.pop(context);
+      // Navigator.pop(context);
       // * display eror message
       displayMessage(e.code);
     }
@@ -116,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         Text(
                           'Forgot Password ?',
-                          style: TextStyle(color: Colors.grey[600]),
+                          style: TextStyle(color: Colors.blue),
                         ),
                       ],
                     ),

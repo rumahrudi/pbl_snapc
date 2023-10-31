@@ -47,11 +47,14 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.shopping_bag,
-              color: secondaryColor,
+          Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.shopping_bag,
+                color: secondaryColor,
+              ),
             ),
           )
         ],
