@@ -29,14 +29,14 @@ class _CheckoutPageState extends State<CheckoutPage> {
               child: ListView(
                 children: [
                   //* title page
-                  Text(
+                  const Text(
                     'Checkout',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   // * package
@@ -54,7 +54,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                             widget.photo.imagePath,
                             width: 80,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           // * Details package
@@ -71,7 +71,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                       fontSize: 20,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   // * star icon
@@ -83,29 +83,30 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                   // * rate
                                   Text(
                                     widget.photo.rating,
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ],
                               ),
 
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               // * subtitle
                               Text(
-                                widget.photo.subtitile,
+                                '${widget.photo.name} Package',
                                 style: TextStyle(
                                   color: Colors.grey[600],
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               // * price
                               Text(
-                                '\Rp' + widget.photo.price,
-                                style: TextStyle(
+                                '\Rp${widget.photo.price}',
+                                style: const TextStyle(
                                   color: Colors.grey,
                                 ),
                               ),

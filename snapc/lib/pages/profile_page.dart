@@ -117,7 +117,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       color: Colors.grey[700],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   // * userdetails
@@ -133,13 +133,13 @@ class _ProfilePageState extends State<ProfilePage> {
 
                   // * username
                   MyTextBox(
-                    sectionName: 'username',
+                    sectionName: 'Username',
                     text: userData['username'],
                     onPressed: () => editField('username'),
                   ),
                   // * user bio
                   MyTextBox(
-                    sectionName: 'bio',
+                    sectionName: 'Bio',
                     text: userData['bio'],
                     onPressed: () => editField('bio'),
                   ),

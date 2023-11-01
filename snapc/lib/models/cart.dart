@@ -6,8 +6,9 @@ class Cart extends ChangeNotifier {
   List<Photo> photoShop = [
     Photo(
       name: 'Basic',
-      subtitile: 'Basic Package',
       price: '100k',
+      numberOfPhotos: '',
+      revisions: '',
       rating: '4.3',
       imagePath: 'lib/images/donut_basic.png',
       description:
@@ -15,8 +16,9 @@ class Cart extends ChangeNotifier {
     ),
     Photo(
       name: 'Standart',
-      subtitile: 'Standart Package',
       price: '300k',
+      numberOfPhotos: '',
+      revisions: '',
       rating: '4.5',
       imagePath: 'lib/images/donout.png',
       description:
@@ -24,8 +26,9 @@ class Cart extends ChangeNotifier {
     ),
     Photo(
         name: 'Premium',
-        subtitile: 'Premium Package',
         price: '400k',
+        numberOfPhotos: '',
+        revisions: '',
         rating: '4.9',
         imagePath: 'lib/images/donout_premium.png',
         description:

@@ -23,13 +23,13 @@ class _ShopPageState extends State<ShopPage> {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: secondaryColor,
-        title: Center(
+        title: const Center(
           child: Text(
             'Successfully Added',
             style: TextStyle(color: Colors.white),
           ),
         ),
-        content: Text(
+        content: const Text(
           'Check your cart',
           style: TextStyle(color: Colors.white),
           textAlign: TextAlign.center,
@@ -63,9 +63,9 @@ class _ShopPageState extends State<ShopPage> {
             decoration: BoxDecoration(
                 color: Colors.grey[200],
                 borderRadius: BorderRadius.circular(8)),
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 Text(
                   'Search',
                   style: TextStyle(color: Colors.grey),
@@ -93,7 +93,7 @@ class _ShopPageState extends State<ShopPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(
+                const Text(
                   'Hot Package',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -133,8 +133,8 @@ class _ShopPageState extends State<ShopPage> {
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 25, left: 25, right: 25),
+          const Padding(
+            padding: EdgeInsets.only(top: 25, left: 25, right: 25),
             child: Divider(
               color: Colors.white,
             ),

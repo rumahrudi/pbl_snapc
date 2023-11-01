@@ -5,7 +5,11 @@ import 'package:snapc/theme/colors.dart';
 class PhotoTile extends StatelessWidget {
   void Function()? onTap;
   Photo photo;
-  PhotoTile({super.key, required this.photo, required this.onTap});
+  PhotoTile({
+    super.key,
+    required this.photo,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +36,7 @@ class PhotoTile extends StatelessWidget {
           ),
           // * description
           Text(
-            photo.subtitile,
+            '${photo.name} Package',
             style: TextStyle(color: Colors.grey[600]),
           ),
           // * price + details
@@ -53,13 +57,13 @@ class PhotoTile extends StatelessWidget {
                         fontSize: 20,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     // * price
                     Text(
-                      '\Rp' + photo.price,
-                      style: TextStyle(color: Colors.grey),
+                      '\Rp${photo.price}',
+                      style: const TextStyle(color: Colors.grey),
                     )
                   ],
                 ),
@@ -70,12 +74,12 @@ class PhotoTile extends StatelessWidget {
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       color: secondaryColor,
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(12),
                         bottomRight: Radius.circular(12),
                       ),
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.add,
                       color: Colors.white,
                     ),

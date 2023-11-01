@@ -27,13 +27,13 @@ class _CartItemState extends State<CartItem> {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: secondaryColor,
-        title: Center(
+        title: const Center(
           child: Text(
             'Successfully Remove',
             style: TextStyle(color: Colors.white),
           ),
         ),
-        content: Text(
+        content: const Text(
           'Check yout cart',
           style: TextStyle(color: Colors.white),
           textAlign: TextAlign.center,
