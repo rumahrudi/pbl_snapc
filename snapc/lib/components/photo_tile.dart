@@ -10,7 +10,7 @@ class PhotoTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(
+      margin: const EdgeInsets.only(
         left: 25,
       ),
       // padding: EdgeInsets.all(20),

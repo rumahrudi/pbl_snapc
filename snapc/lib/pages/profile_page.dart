@@ -17,8 +17,68 @@ class _ProfilePageState extends State<ProfilePage> {
   // * user
   final currentUser = FirebaseAuth.instance.currentUser!;
 
+  // * all user collection
+  final userCollection = FirebaseFirestore.instance.collection('Users');
+
   // * edit field
-  Future<void> editField(String field) async {}
+  Future<void> editField(String field) async {
+    String newValue = '';
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: secondaryColor,
+        title: Text(
+          'Edit $field',
+          style: const TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        content: TextField(
+          autofocus: true,
+          style: const TextStyle(
+            color: Colors.white,
+          ),
+          decoration: InputDecoration(
+            hintText: 'Enter new $field',
+            hintStyle: const TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          onChanged: (value) {
+            newValue = value;
+          },
+        ),
+        actions: [
+          // * cancel button
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text(
+              'Save',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+          // * save button
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(newValue),
+            child: const Text(
+              'Save',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+    if (newValue.trim().length > 0) {
+      // * only update when there is something in textfield
+      await userCollection.doc(currentUser.email).update(
+        {field: newValue},
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
