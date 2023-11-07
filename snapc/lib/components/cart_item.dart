@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:snapc/models/cart.dart';
-import 'package:snapc/models/photo.dart';
+import 'package:snapc/database/firestore.dart';
+// import 'package:provider/provider.dart';
+// import 'package:snapc/models/cart.dart';
+// import 'package:snapc/models/photo.dart';
 import 'package:snapc/theme/colors.dart';
 
 class CartItem extends StatefulWidget {
-  Photo photo;
-  // void Function()? onTap;
-  CartItem({
+  final String docId;
+  final String name;
+  final String price;
+  final String imagePath;
+  // final Function()? onPressed;
+
+  const CartItem({
     super.key,
-    required this.photo,
-    // required this.onTap,
+    required this.docId,
+    required this.name,
+    required this.price,
+    required this.imagePath,
+    // required this.onPressed,
   });
 
   @override
@@ -18,10 +26,11 @@ class CartItem extends StatefulWidget {
 }
 
 class _CartItemState extends State<CartItem> {
+  // * firestore
+  final FirestoreService firestoreService = FirestoreService();
+
   // * remove item from cart
   void removeItemFromCart() {
-    Provider.of<Cart>(context, listen: false).removeItemFromCart(widget.photo);
-
     // ! Allert succesfully remove
     showDialog(
       context: context,
@@ -51,11 +60,14 @@ class _CartItemState extends State<CartItem> {
       ),
       margin: const EdgeInsets.only(bottom: 8),
       child: ListTile(
-        leading: Image.asset(widget.photo.imagePath),
-        title: Text(widget.photo.name),
-        subtitle: Text(widget.photo.price),
+        leading: Image.asset(widget.imagePath),
+        title: Text(widget.name),
+        subtitle: Text('\Rp ${widget.price}k'),
         trailing: IconButton(
-          onPressed: removeItemFromCart,
+          onPressed: () {
+            firestoreService.deleteCart(widget.docId);
+            removeItemFromCart();
+          },
           icon: Icon(
             Icons.delete,
             color: secondaryColor,

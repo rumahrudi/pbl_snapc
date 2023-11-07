@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:snapc/admin_pages/admin_dashboard.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:snapc/components/my_list_tile.dart';
 import 'package:snapc/theme/colors.dart';
@@ -68,6 +69,18 @@ class MyDrawer extends StatelessWidget {
                 text: 'H O M E',
                 onTap: () {},
               ),
+              // * Dasboard
+              MyListTile(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Dasboard(),
+                      ),
+                    );
+                  },
+                  icon: Icons.dashboard,
+                  text: 'D A S H B O A R D'),
               // * Profile
               MyListTile(
                 icon: Icons.person,

@@ -1,32 +1,47 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'package:snapc/components/my_app_bar.dart';
 import 'package:snapc/components/my_button.dart';
-import 'package:snapc/models/photo.dart';
-import 'package:snapc/models/cart.dart';
+import 'package:snapc/database/firestore.dart';
 import 'package:snapc/theme/colors.dart';
 
-class PageDetails extends StatefulWidget {
-  final Photo photo;
-  const PageDetails({super.key, required this.photo});
+class PackagesDetails extends StatefulWidget {
+  final String name;
+  final String imagePath;
+  final String price;
+  final String decs;
+  final String rating;
+
+  const PackagesDetails({
+    super.key,
+    required this.name,
+    required this.imagePath,
+    required this.price,
+    required this.decs,
+    required this.rating,
+  });
 
   @override
-  State<PageDetails> createState() => _PageDetailsState();
+  State<PackagesDetails> createState() => _PackagesDetailsState();
 }
 
-class _PageDetailsState extends State<PageDetails> {
-  void addPhotoPackageToCart(Photo photo) {
-    Provider.of<Cart>(context, listen: false).addItemToCart(widget.photo);
+class _PackagesDetailsState extends State<PackagesDetails> {
+  // * user
+  final currentUser = FirebaseAuth.instance.currentUser!;
 
-    // ! alert user ,show successfully added
+  // * firestore
+  final FirestoreService firestoreService = FirestoreService();
+
+  void allertAddToCart() {
+    // ! Allert succesfully add to cart
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: secondaryColor,
         title: const Center(
           child: Text(
-            'Successfully Added',
+            'Successfully Add to Cart',
             style: TextStyle(color: Colors.white),
           ),
         ),
@@ -43,7 +58,7 @@ class _PageDetailsState extends State<PageDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      appBar: MyAppBar(text: 'Package Detail'),
+      appBar: const MyAppBar(text: 'Package Detail'),
       body: Column(
         children: [
           Expanded(
@@ -51,14 +66,14 @@ class _PageDetailsState extends State<PageDetails> {
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: ListView(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
                   Image.asset(
-                    widget.photo.imagePath,
+                    widget.imagePath,
                     height: 150,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
                   Row(
@@ -73,7 +88,7 @@ class _PageDetailsState extends State<PageDetails> {
                       ),
                       // * number
                       Text(
-                        widget.photo.rating,
+                        widget.rating,
                         style: TextStyle(
                             color: Colors.grey[600],
                             fontWeight: FontWeight.bold),
@@ -85,10 +100,10 @@ class _PageDetailsState extends State<PageDetails> {
                   ),
                   // * food name
                   Text(
-                    widget.photo.name,
+                    widget.name,
                     style: GoogleFonts.dmSerifDisplay(fontSize: 28),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
                   // * description
@@ -100,14 +115,14 @@ class _PageDetailsState extends State<PageDetails> {
                       fontSize: 18,
                     ),
                   ),
-                  SizedBox(
-                    height: 25,
+                  const SizedBox(
+                    height: 10,
                   ),
                   Text(
-                    widget.photo.description,
+                    widget.decs,
                     style: TextStyle(
                         color: Colors.grey[600], fontSize: 14, height: 2),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -126,7 +141,18 @@ class _PageDetailsState extends State<PageDetails> {
                   // * button
                   MyButton(
                     text: 'Add To Cart',
-                    onTap: () => addPhotoPackageToCart(widget.photo),
+                    onTap: () {
+                      // * add package to cart
+                      firestoreService.addToCart(
+                        currentUser.email!,
+                        widget.name,
+                        widget.price,
+                        widget.imagePath,
+                      );
+
+                      // * show allert
+                      allertAddToCart();
+                    },
                   )
                 ],
               ),

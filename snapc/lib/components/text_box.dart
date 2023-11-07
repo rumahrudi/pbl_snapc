@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:snapc/theme/colors.dart';
 
 class MyTextBox extends StatelessWidget {
   final String sectionName;
@@ -43,7 +44,7 @@ class MyTextBox extends StatelessWidget {
                 onPressed: onPressed,
                 icon: Icon(
                   Icons.settings,
-                  color: Colors.grey[400],
+                  color: secondaryColor,
                 ),
               )
             ],

@@ -72,7 +72,7 @@ class _ProfilePageState extends State<ProfilePage> {
         ],
       ),
     );
-    if (newValue.trim().length > 0) {
+    if (newValue.trim().isNotEmpty) {
       // * only update when there is something in textfield
       await userCollection.doc(currentUser.email).update(
         {field: newValue},
