@@ -9,6 +9,10 @@ class FirestoreService {
   final CollectionReference cart =
       FirebaseFirestore.instance.collection('Cart');
 
+  // * get collection of orders
+  final CollectionReference orders =
+      FirebaseFirestore.instance.collection('Orders');
+
   // ? CREATE
 
   // * add to cart

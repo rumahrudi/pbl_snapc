@@ -5,11 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:snapc/components/cart_item.dart';
 import 'package:snapc/database/firestore.dart';
 import 'package:snapc/models/cart.dart';
-import 'package:snapc/models/photo.dart';
 import 'package:snapc/pages/checkout_page.dart';
 
 class CartPage extends StatefulWidget {
-  const CartPage({Key? key});
+  const CartPage({super.key});
 
   @override
   State<CartPage> createState() => _CartPageState();
@@ -19,12 +18,18 @@ class _CartPageState extends State<CartPage> {
   final currentUser = FirebaseAuth.instance.currentUser!;
   final FirestoreService firestoreService = FirestoreService();
 
-  void navigateToCheckoutPage(BuildContext context, Photo photo) {
+  void navigateToCheckoutPage(
+    String name,
+    String imagePath,
+    String price,
+  ) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => CheckoutPage(
-          photo: photo,
+          name: name,
+          imagePath: imagePath,
+          price: price,
         ),
       ),
     );
@@ -64,11 +69,18 @@ class _CartPageState extends State<CartPage> {
                           String price = data['price'];
                           String imagePath = data['imagePath'];
 
-                          return CartItem(
-                            docId: docId,
-                            name: name,
-                            price: price,
-                            imagePath: imagePath,
+                          return GestureDetector(
+                            onTap: () => navigateToCheckoutPage(
+                              name,
+                              imagePath,
+                              price,
+                            ),
+                            child: CartItem(
+                              docId: docId,
+                              name: name,
+                              price: price,
+                              imagePath: imagePath,
+                            ),
                           );
                         } else {
                           return const Center(

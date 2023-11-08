@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:snapc/admin_pages/admin_dashboard.dart';
-// import 'package:google_fonts/google_fonts.dart';
+
 import 'package:snapc/components/my_list_tile.dart';
 import 'package:snapc/theme/colors.dart';
 
@@ -10,6 +10,7 @@ import '../auth/auth.dart';
 class MyDrawer extends StatelessWidget {
   final void Function()? onProfileTap;
   final void Function()? onAboutTap;
+
   const MyDrawer({
     super.key,
     required this.onProfileTap,

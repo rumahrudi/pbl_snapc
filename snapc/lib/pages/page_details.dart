@@ -43,7 +43,7 @@ class _PageDetailsState extends State<PageDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      appBar: MyAppBar(text: 'Package Detail'),
+      appBar: const MyAppBar(text: 'Package Detail'),
       body: Column(
         children: [
           Expanded(
@@ -51,14 +51,14 @@ class _PageDetailsState extends State<PageDetails> {
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: ListView(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
                   Image.asset(
                     widget.photo.imagePath,
                     height: 150,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
                   Row(
@@ -88,7 +88,7 @@ class _PageDetailsState extends State<PageDetails> {
                     widget.photo.name,
                     style: GoogleFonts.dmSerifDisplay(fontSize: 28),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
                   // * description

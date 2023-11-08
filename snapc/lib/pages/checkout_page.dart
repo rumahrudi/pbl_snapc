@@ -1,18 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:snapc/components/date_field.dart';
+// import 'package:google_fonts/google_fonts.dart';
 import 'package:snapc/components/my_app_bar.dart';
-import 'package:snapc/models/photo.dart';
-import 'package:snapc/theme/colors.dart';
+import 'package:snapc/components/my_button.dart';
+import 'package:snapc/components/my_textfield.dart';
+import 'package:intl/intl.dart';
+
+// import 'package:snapc/theme/colors.dart';
 
 class CheckoutPage extends StatefulWidget {
-  final Photo photo;
-  const CheckoutPage({super.key, required this.photo});
+  final String name;
+  final String imagePath;
+  final String price;
+  const CheckoutPage({
+    super.key,
+    required this.name,
+    required this.imagePath,
+    required this.price,
+  });
 
   @override
   State<CheckoutPage> createState() => _CheckoutPageState();
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
+  // * text controller
+  final nameController = TextEditingController();
+  final phoneController = TextEditingController();
+  final addressController = TextEditingController();
+
+  // * date time now
+
+  DateTime _dateTime = DateTime.now();
+
+  // * show date picker
+
+  void _showDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2030),
+    ).then((value) {
+      setState(() {
+        _dateTime = value!;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,106 +57,104 @@ class _CheckoutPageState extends State<CheckoutPage> {
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 25,
-                vertical: 25,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 25),
               child: ListView(
                 children: [
-                  //* title page
-                  const Text(
-                    'Checkout',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: ListTile(
+                      leading: Image.asset(widget.imagePath),
+                      title: Text('${widget.name} Package'),
+                      subtitle: Text('Rp ${widget.price}k'),
                     ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 25,
                   ),
-                  // * package
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Row(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // * image package
-                          Image.asset(
-                            widget.photo.imagePath,
-                            width: 80,
+                          const Text(
+                            'Form Booking',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
                           ),
                           const SizedBox(
-                            width: 10,
+                            height: 10,
                           ),
-                          // * Details package
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  // * name package
-                                  Text(
-                                    widget.photo.name,
-                                    style: GoogleFonts.dmSerifDisplay(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  // * star icon
-                                  Icon(
-                                    Icons.star,
-                                    color: secondaryColor,
-                                  ),
-
-                                  // * rate
-                                  Text(
-                                    widget.photo.rating,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              // * subtitle
-                              Text(
-                                '${widget.photo.name} Package',
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              // * price
-                              Text(
-                                '\Rp${widget.photo.price}',
-                                style: const TextStyle(
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ],
-                          )
+                          MyTextField(
+                            controller: nameController,
+                            hintText: 'Full Name',
+                            obsecureText: false,
+                            readOnly: false,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          MyTextField(
+                            controller: phoneController,
+                            hintText: 'No Whatsapp',
+                            obsecureText: false,
+                            readOnly: false,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          DateField(
+                            onTap: _showDatePicker,
+                            hintText:
+                                DateFormat('EEEE, MMMM d, y').format(_dateTime),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          MyTextField(
+                              controller: addressController,
+                              hintText: 'Full Address',
+                              obsecureText: false,
+                              readOnly: false),
+                          const SizedBox(
+                            height: 10,
+                          ),
                         ],
                       ),
                     ),
-                  )
-
-                  // * form
+                  ),
                 ],
               ),
             ),
           ),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.grey[100],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(25),
+              child: Column(
+                children: [
+                  MyButton(
+                    text: 'Checkout',
+                    onTap: () {},
+                  )
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );

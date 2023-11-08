@@ -122,6 +122,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       controller: emailController,
                       hintText: 'Username',
                       obsecureText: false,
+                      readOnly: false,
                     ),
 
                     const SizedBox(
@@ -132,6 +133,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       controller: passwordController,
                       hintText: 'Password',
                       obsecureText: true,
+                      readOnly: false,
                     ),
 
                     const SizedBox(
@@ -142,6 +144,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       controller: confirmPasswordController,
                       hintText: 'Confirm Password',
                       obsecureText: true,
+                      readOnly: false,
                     ),
 
                     const SizedBox(

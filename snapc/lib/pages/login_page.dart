@@ -6,7 +6,7 @@ import 'package:snapc/theme/colors.dart';
 
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
-  LoginPage({
+  const LoginPage({
     super.key,
     required this.onTap,
   });
@@ -95,6 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                       controller: emailController,
                       hintText: 'Username',
                       obsecureText: false,
+                      readOnly: false,
                     ),
 
                     const SizedBox(
@@ -105,6 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                       controller: passwordController,
                       hintText: 'Password',
                       obsecureText: true,
+                      readOnly: false,
                     ),
 
                     const SizedBox(

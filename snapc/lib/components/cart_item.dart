@@ -61,7 +61,7 @@ class _CartItemState extends State<CartItem> {
       margin: const EdgeInsets.only(bottom: 8),
       child: ListTile(
         leading: Image.asset(widget.imagePath),
-        title: Text(widget.name),
+        title: Text('${widget.name} Package'),
         subtitle: Text('\Rp ${widget.price}k'),
         trailing: IconButton(
           onPressed: () {

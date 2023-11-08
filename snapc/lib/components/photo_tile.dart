@@ -3,9 +3,9 @@ import 'package:snapc/models/photo.dart';
 import 'package:snapc/theme/colors.dart';
 
 class PhotoTile extends StatelessWidget {
-  void Function()? onTap;
-  Photo photo;
-  PhotoTile({
+  final Function()? onTap;
+  final Photo photo;
+  const PhotoTile({
     super.key,
     required this.photo,
     required this.onTap,

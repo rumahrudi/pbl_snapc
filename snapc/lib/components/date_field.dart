@@ -1,25 +1,20 @@
 import 'package:flutter/material.dart';
 
-class MyTextField extends StatelessWidget {
-  final controller;
+class DateField extends StatelessWidget {
+  final Function()? onTap;
   final String hintText;
-  final bool obsecureText;
-  final bool readOnly;
-
-  const MyTextField({
+  const DateField({
     super.key,
-    required this.controller,
+    required this.onTap,
     required this.hintText,
-    required this.obsecureText,
-    required this.readOnly,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      controller: controller,
-      obscureText: obsecureText,
-      readOnly: readOnly,
+      obscureText: false,
+      readOnly: true,
+      onTap: onTap,
       decoration: InputDecoration(
           enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(
