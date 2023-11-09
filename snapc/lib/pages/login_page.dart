@@ -113,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                       height: 10,
                     ),
                     //* forgot pasword
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
@@ -150,7 +150,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         GestureDetector(
                           onTap: widget.onTap,
-                          child: Text(
+                          child: const Text(
                             'Register now',
                             style: TextStyle(
                               color: Colors.blue,

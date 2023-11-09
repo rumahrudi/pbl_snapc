@@ -1,12 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:snapc/components/date_field.dart';
-// import 'package:google_fonts/google_fonts.dart';
 import 'package:snapc/components/my_app_bar.dart';
 import 'package:snapc/components/my_button.dart';
 import 'package:snapc/components/my_textfield.dart';
 import 'package:intl/intl.dart';
-
-// import 'package:snapc/theme/colors.dart';
+import 'package:snapc/database/firestore.dart';
+import 'package:snapc/pages/cart_page.dart';
+import 'package:snapc/theme/colors.dart';
 
 class CheckoutPage extends StatefulWidget {
   final String name;
@@ -24,6 +25,9 @@ class CheckoutPage extends StatefulWidget {
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
+  // * firestore
+  final FirestoreService firestoreService = FirestoreService();
+
   // * text controller
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
@@ -48,11 +52,77 @@ class _CheckoutPageState extends State<CheckoutPage> {
     });
   }
 
+  // * navigate to other page
+  void _navigatePage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const CartPage(),
+      ),
+    );
+  }
+
+  //* Function to show AlertDialog
+  void _showAlertDialog(String title, String content) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor:
+            secondaryColor, // Sesuaikan warna latar belakang sesuai keinginan
+        title: Center(
+          child: Text(
+            title,
+            style: const TextStyle(color: Colors.white),
+          ),
+        ),
+        content: Text(
+          content,
+          style: const TextStyle(color: Colors.white),
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+
+  // * add data from form to database orders
+  void _submitForm() async {
+    // Cek jumlah booking pada tanggal yang sama
+    final QuerySnapshot<Map<String, dynamic>> orders = await FirebaseFirestore
+        .instance
+        .collection('Orders')
+        .where('date',
+            isEqualTo: DateFormat('EEEE, MMMM d, y').format(_dateTime))
+        .get();
+
+    if (orders.docs.length >= 3) {
+      _showAlertDialog('Error', 'Maaf, tanggal tersebut sudah penuh.');
+      return;
+    }
+
+    // Jika validasi berhasil, tambahkan data ke Firestore
+    // await FirebaseFirestore.instance.collection('Orders').add({
+    //   'tanggal': DateFormat('EEEE, MMMM d, y').format(_dateTime),
+    // });
+
+    await firestoreService.addToOrders(
+      widget.name,
+      nameController.text,
+      phoneController.text,
+      DateFormat('EEEE, MMMM d, y').format(_dateTime),
+      addressController.text,
+    );
+
+    _showAlertDialog('Success', 'Booking berhasil ditambahkan');
+
+    //  navigate to cart page
+    // _navigatePage();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      appBar: const MyAppBar(text: 'Checkout'),
+      appBar: const MyAppBar(text: 'C H E C K O U T'),
       body: Column(
         children: [
           Expanded(
@@ -149,7 +219,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 children: [
                   MyButton(
                     text: 'Checkout',
-                    onTap: () {},
+                    onTap: () {
+                      _submitForm();
+                    },
                   )
                 ],
               ),

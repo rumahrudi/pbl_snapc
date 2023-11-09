@@ -31,6 +31,23 @@ class FirestoreService {
     });
   }
 
+  // * add to orders
+  Future<void> addToOrders(
+    String typePackage,
+    String fullName,
+    String noWa,
+    String date,
+    String address,
+  ) {
+    return orders.add({
+      'typePackage': typePackage,
+      'fullName': fullName,
+      'noWa': noWa,
+      'date': date,
+      'address': address,
+    });
+  }
+
   // ? READ
 
   // * read packages

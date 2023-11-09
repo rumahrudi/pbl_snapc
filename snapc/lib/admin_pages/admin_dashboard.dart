@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:snapc/auth/auth.dart';
 import 'package:snapc/components/my_app_bar.dart';
 import 'package:snapc/database/firestore.dart';
 
@@ -16,6 +17,16 @@ class _DasboardState extends State<Dasboard> {
 
   // * firestore
   final FirestoreService firestoreService = FirestoreService();
+
+  void signOut(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => const AuthPage(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,9 +34,22 @@ class _DasboardState extends State<Dasboard> {
       appBar: const MyAppBar(
         text: 'Dashboard',
       ),
-      body: const Scaffold(
-        body: Text(
-          'My Dasboard',
+      body: Scaffold(
+        body: Center(
+          child: GestureDetector(
+            onTap: () {
+              signOut(context);
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(25),
+              child: Container(
+                decoration: const BoxDecoration(color: Colors.blue),
+                child: const Text(
+                  'L O G O U T',
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );

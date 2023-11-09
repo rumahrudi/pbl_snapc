@@ -58,7 +58,7 @@ class _PackagesDetailsState extends State<PackagesDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      appBar: const MyAppBar(text: 'Package Detail'),
+      appBar: const MyAppBar(text: 'D E T A I L S'),
       body: Column(
         children: [
           Expanded(
