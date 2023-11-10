@@ -53,7 +53,7 @@ class _ProfilePageState extends State<ProfilePage> {
           TextButton(
             onPressed: () => Navigator.pop(context),
             child: const Text(
-              'Save',
+              'Cancel',
               style: TextStyle(
                 color: Colors.white,
               ),

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:snapc/components/date_field.dart';
 import 'package:snapc/components/my_app_bar.dart';
@@ -6,18 +7,20 @@ import 'package:snapc/components/my_button.dart';
 import 'package:snapc/components/my_textfield.dart';
 import 'package:intl/intl.dart';
 import 'package:snapc/database/firestore.dart';
-import 'package:snapc/pages/cart_page.dart';
+import 'package:snapc/pages/home_page.dart';
 import 'package:snapc/theme/colors.dart';
 
 class CheckoutPage extends StatefulWidget {
   final String name;
   final String imagePath;
   final String price;
+  final String docId;
   const CheckoutPage({
     super.key,
     required this.name,
     required this.imagePath,
     required this.price,
+    required this.docId,
   });
 
   @override
@@ -25,6 +28,9 @@ class CheckoutPage extends StatefulWidget {
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
+  // * user
+  final currentUser = FirebaseAuth.instance.currentUser!;
+
   // * firestore
   final FirestoreService firestoreService = FirestoreService();
 
@@ -46,26 +52,29 @@ class _CheckoutPageState extends State<CheckoutPage> {
       firstDate: DateTime(2000),
       lastDate: DateTime(2030),
     ).then((value) {
-      setState(() {
-        _dateTime = value!;
-      });
+      if (value != null) {
+        setState(() {
+          _dateTime = value;
+        });
+      }
     });
   }
 
-  // * navigate to other page
   void _navigatePage() {
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => const CartPage(),
+        builder: (context) => const HomePage(),
       ),
     );
   }
 
   //* Function to show AlertDialog
-  void _showAlertDialog(String title, String content) {
+  void _showAlertDialog(
+      String title, String content, void Function()? onPressed) {
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (context) => AlertDialog(
         backgroundColor:
             secondaryColor, // Sesuaikan warna latar belakang sesuai keinginan
@@ -80,13 +89,26 @@ class _CheckoutPageState extends State<CheckoutPage> {
           style: const TextStyle(color: Colors.white),
           textAlign: TextAlign.center,
         ),
+        actions: [
+          TextButton(
+            onPressed: onPressed,
+            child: const Text(
+              'O K',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
 
   // * add data from form to database orders
   void _submitForm() async {
-    // Cek jumlah booking pada tanggal yang sama
+    // * if user choose weekend
+
+    //* take date drom col orders
     final QuerySnapshot<Map<String, dynamic>> orders = await FirebaseFirestore
         .instance
         .collection('Orders')
@@ -95,7 +117,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
         .get();
 
     if (orders.docs.length >= 3) {
-      _showAlertDialog('Error', 'Maaf, tanggal tersebut sudah penuh.');
+      _showAlertDialog(
+        'Error',
+        'Maaf, tanggal tersebut sudah penuh.',
+        () {
+          Navigator.pop(context);
+        },
+      );
       return;
     }
 
@@ -106,15 +134,25 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
     await firestoreService.addToOrders(
       widget.name,
+      currentUser.email!,
       nameController.text,
       phoneController.text,
       DateFormat('EEEE, MMMM d, y').format(_dateTime),
       addressController.text,
     );
 
-    _showAlertDialog('Success', 'Booking berhasil ditambahkan');
+    await firestoreService.deleteCart(widget.docId);
 
-    //  navigate to cart page
+    _showAlertDialog(
+      'Success',
+      'Booking berhasil ditambahkan',
+      () {
+        Navigator.pop(context);
+        _navigatePage();
+      },
+    );
+
+    // * navigate to cart page
     // _navigatePage();
   }
 

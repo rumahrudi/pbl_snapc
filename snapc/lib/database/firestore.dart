@@ -34,6 +34,7 @@ class FirestoreService {
   // * add to orders
   Future<void> addToOrders(
     String typePackage,
+    String email,
     String fullName,
     String noWa,
     String date,
@@ -41,10 +42,12 @@ class FirestoreService {
   ) {
     return orders.add({
       'typePackage': typePackage,
+      'email': email,
       'fullName': fullName,
       'noWa': noWa,
       'date': date,
       'address': address,
+      'timeStamp': Timestamp.now(),
     });
   }
 

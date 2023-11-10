@@ -22,6 +22,7 @@ class _CartPageState extends State<CartPage> {
     String name,
     String imagePath,
     String price,
+    String docId,
   ) {
     Navigator.push(
       context,
@@ -30,6 +31,7 @@ class _CartPageState extends State<CartPage> {
           name: name,
           imagePath: imagePath,
           price: price,
+          docId: docId,
         ),
       ),
     );
@@ -74,6 +76,7 @@ class _CartPageState extends State<CartPage> {
                               name,
                               imagePath,
                               price,
+                              docId,
                             ),
                             child: CartItem(
                               docId: docId,
@@ -84,8 +87,11 @@ class _CartPageState extends State<CartPage> {
                           );
                         } else {
                           return const Center(
-                            child: Text(
-                              'no packages in the cart',
+                            child: Padding(
+                              padding: EdgeInsets.all(25),
+                              child: Text(
+                                'Cart is Empty',
+                              ),
                             ),
                           );
                         }
@@ -100,7 +106,7 @@ class _CartPageState extends State<CartPage> {
                   } else {
                     return const Center(
                       child: Text(
-                        'no packages in the cart',
+                        'Cart is Empty',
                       ),
                     );
                   }
