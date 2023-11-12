@@ -63,6 +63,7 @@ class _PackageCardState extends State<PackageCard> {
                 String price = data['price'];
                 String decs = data['decs'];
                 String rating = data['rating'];
+                String revisions = data['revisions'];
 
                 return GestureDetector(
                   onTap: () {
@@ -73,6 +74,7 @@ class _PackageCardState extends State<PackageCard> {
                         price: price,
                         decs: decs,
                         rating: rating,
+                        revisions: revisions,
                       ),
                     ));
                   },
@@ -87,6 +89,7 @@ class _PackageCardState extends State<PackageCard> {
                         name,
                         price,
                         imagePath,
+                        revisions,
                       );
                       // * show alert
                       allertAddToCart();

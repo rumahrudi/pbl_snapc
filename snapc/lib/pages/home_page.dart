@@ -7,7 +7,11 @@ import 'package:snapc/pages/shop_page.dart';
 import 'package:snapc/theme/colors.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final int initialPageIndex;
+  const HomePage({
+    super.key,
+    required this.initialPageIndex,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -17,6 +21,14 @@ class _HomePageState extends State<HomePage> {
   // * this selected index to controll the bottom nav bar
 
   int _selectedIndex = 0;
+
+  // * get index from other page
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.initialPageIndex;
+  }
+
   // * this method to update selected index
   void navigateBottomBar(int index) {
     setState(() {
@@ -41,6 +53,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       bottomNavigationBar: MyBottomNavBar(
+        currentIndex: _selectedIndex,
         onTabChange: (index) => navigateBottomBar(index),
       ),
       appBar: AppBar(

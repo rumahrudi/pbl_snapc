@@ -23,6 +23,7 @@ class _CartPageState extends State<CartPage> {
     String imagePath,
     String price,
     String docId,
+    String revisions,
   ) {
     Navigator.push(
       context,
@@ -32,6 +33,7 @@ class _CartPageState extends State<CartPage> {
           imagePath: imagePath,
           price: price,
           docId: docId,
+          revisions: revisions,
         ),
       ),
     );
@@ -70,6 +72,7 @@ class _CartPageState extends State<CartPage> {
                           String name = data['name'];
                           String price = data['price'];
                           String imagePath = data['imagePath'];
+                          String revisions = data['revisions'];
 
                           return GestureDetector(
                             onTap: () => navigateToCheckoutPage(
@@ -77,6 +80,7 @@ class _CartPageState extends State<CartPage> {
                               imagePath,
                               price,
                               docId,
+                              revisions,
                             ),
                             child: CartItem(
                               docId: docId,

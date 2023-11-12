@@ -12,15 +12,16 @@ class PackagesDetails extends StatefulWidget {
   final String price;
   final String decs;
   final String rating;
+  final String revisions;
 
-  const PackagesDetails({
-    super.key,
-    required this.name,
-    required this.imagePath,
-    required this.price,
-    required this.decs,
-    required this.rating,
-  });
+  const PackagesDetails(
+      {super.key,
+      required this.name,
+      required this.imagePath,
+      required this.price,
+      required this.decs,
+      required this.rating,
+      required this.revisions});
 
   @override
   State<PackagesDetails> createState() => _PackagesDetailsState();
@@ -144,11 +145,11 @@ class _PackagesDetailsState extends State<PackagesDetails> {
                     onTap: () {
                       // * add package to cart
                       firestoreService.addToCart(
-                        currentUser.email!,
-                        widget.name,
-                        widget.price,
-                        widget.imagePath,
-                      );
+                          currentUser.email!,
+                          widget.name,
+                          widget.price,
+                          widget.imagePath,
+                          widget.revisions);
 
                       // * show allert
                       allertAddToCart();

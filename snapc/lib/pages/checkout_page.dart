@@ -15,12 +15,14 @@ class CheckoutPage extends StatefulWidget {
   final String imagePath;
   final String price;
   final String docId;
+  final String revisions;
   const CheckoutPage({
     super.key,
     required this.name,
     required this.imagePath,
     required this.price,
     required this.docId,
+    required this.revisions,
   });
 
   @override
@@ -64,7 +66,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => const HomePage(),
+        builder: (context) => const HomePage(initialPageIndex: 1),
       ),
     );
   }
@@ -82,6 +84,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
           child: Text(
             title,
             style: const TextStyle(color: Colors.white),
+            textAlign: TextAlign.center,
           ),
         ),
         content: Text(
@@ -106,7 +109,18 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
   // * add data from form to database orders
   void _submitForm() async {
-    // * if user choose weekend
+    // * if form not complete
+
+    if ([
+      nameController,
+      phoneController,
+      addressController,
+    ].any((controller) => controller.text.isEmpty)) {
+      _showAlertDialog('An Error Occurred', 'Form not completed', () {
+        Navigator.pop(context);
+      });
+      return;
+    }
 
     //* take date drom col orders
     final QuerySnapshot<Map<String, dynamic>> orders = await FirebaseFirestore
@@ -118,7 +132,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
     if (orders.docs.length >= 3) {
       _showAlertDialog(
-        'Error',
+        'An Error Occurred',
         'Maaf, tanggal tersebut sudah penuh.',
         () {
           Navigator.pop(context);
@@ -133,18 +147,18 @@ class _CheckoutPageState extends State<CheckoutPage> {
     // });
 
     await firestoreService.addToOrders(
-      widget.name,
-      currentUser.email!,
-      nameController.text,
-      phoneController.text,
-      DateFormat('EEEE, MMMM d, y').format(_dateTime),
-      addressController.text,
-    );
+        widget.name,
+        currentUser.email!,
+        nameController.text,
+        phoneController.text,
+        DateFormat('EEEE, MMMM d, y').format(_dateTime),
+        addressController.text,
+        widget.revisions);
 
     await firestoreService.deleteCart(widget.docId);
 
     _showAlertDialog(
-      'Success',
+      'Successfully Add Order',
       'Booking berhasil ditambahkan',
       () {
         Navigator.pop(context);
@@ -216,10 +230,18 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           ),
                           MyTextField(
                             controller: phoneController,
-                            hintText: 'No Whatsapp',
+                            hintText: 'No WhatsApp',
                             obsecureText: false,
                             readOnly: false,
                           ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          MyTextField(
+                              controller: addressController,
+                              hintText: 'Address',
+                              obsecureText: false,
+                              readOnly: false),
                           const SizedBox(
                             height: 10,
                           ),
@@ -228,21 +250,15 @@ class _CheckoutPageState extends State<CheckoutPage> {
                             hintText:
                                 DateFormat('EEEE, MMMM d, y').format(_dateTime),
                           ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          MyTextField(
-                              controller: addressController,
-                              hintText: 'Full Address',
-                              obsecureText: false,
-                              readOnly: false),
-                          const SizedBox(
-                            height: 10,
-                          ),
                         ],
                       ),
                     ),
                   ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+
+                  // * shcedule
                 ],
               ),
             ),

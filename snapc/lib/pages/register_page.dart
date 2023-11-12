@@ -52,7 +52,8 @@ class _RegisterPageState extends State<RegisterPage> {
           .doc(userCredential.user!.email!)
           .set({
         'username': emailController.text.split('@')[0],
-        'bio': 'Empty bio ...'
+        'bio': 'Empty bio ...',
+        'role': 'user',
       });
 
       // * pop loading circle

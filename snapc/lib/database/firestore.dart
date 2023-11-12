@@ -21,12 +21,14 @@ class FirestoreService {
     String name,
     String price,
     String imagePath,
+    String revisions,
   ) {
     return cart.add({
       'email': email,
       'name': name,
       'price': price,
       'imagePath': imagePath,
+      'revisions': revisions,
       'timeStamp': Timestamp.now(),
     });
   }
@@ -39,6 +41,7 @@ class FirestoreService {
     String noWa,
     String date,
     String address,
+    String revisions,
   ) {
     return orders.add({
       'typePackage': typePackage,
@@ -48,6 +51,7 @@ class FirestoreService {
       'date': date,
       'address': address,
       'timeStamp': Timestamp.now(),
+      'revisions': revisions,
     });
   }
 
@@ -58,6 +62,14 @@ class FirestoreService {
     final packagesStream = packages.orderBy(FieldPath.documentId).snapshots();
 
     return packagesStream;
+  }
+
+  // * get package by name
+  Stream<QuerySnapshot> getPackagesByName(String namePackage) {
+    final packageByName =
+        packages.where('name', isEqualTo: namePackage).snapshots();
+
+    return packageByName;
   }
 
   // * read cart
