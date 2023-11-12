@@ -117,6 +117,9 @@ class _CartPageState extends State<CartPage> {
                 },
               ),
             ),
+            const Divider(
+              color: Colors.white,
+            ),
           ],
         ),
       ),

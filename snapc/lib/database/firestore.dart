@@ -42,6 +42,8 @@ class FirestoreService {
     String date,
     String address,
     String revisions,
+    String total,
+    String paymentMethode,
   ) {
     return orders.add({
       'typePackage': typePackage,
@@ -52,6 +54,9 @@ class FirestoreService {
       'address': address,
       'timeStamp': Timestamp.now(),
       'revisions': revisions,
+      'total': total,
+      'paymentMethode': paymentMethode,
+      'status': 'Belum Bayar',
     });
   }
 
@@ -64,14 +69,6 @@ class FirestoreService {
     return packagesStream;
   }
 
-  // * get package by name
-  Stream<QuerySnapshot> getPackagesByName(String namePackage) {
-    final packageByName =
-        packages.where('name', isEqualTo: namePackage).snapshots();
-
-    return packageByName;
-  }
-
   // * read cart
   Stream<QuerySnapshot> getCartStream(String? currentUser) {
     final cartStream = cart
@@ -80,6 +77,16 @@ class FirestoreService {
         .snapshots();
 
     return cartStream;
+  }
+
+  // * read orders
+  Stream<QuerySnapshot> getOrdersStream(String? currentUser) {
+    final ordersStream = orders
+        .where('email', isEqualTo: currentUser)
+        .orderBy('timeStamp', descending: true)
+        .snapshots();
+
+    return ordersStream;
   }
 
   // ? UPDATE

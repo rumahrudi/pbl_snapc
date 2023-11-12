@@ -3,6 +3,7 @@ import 'package:snapc/components/botttom_nav_bar.dart';
 import 'package:snapc/components/my_drawer.dart';
 import 'package:snapc/components/navigation_utils.dart';
 import 'package:snapc/pages/cart_page.dart';
+import 'package:snapc/pages/order_page.dart';
 import 'package:snapc/pages/shop_page.dart';
 import 'package:snapc/theme/colors.dart';
 
@@ -42,6 +43,8 @@ class _HomePageState extends State<HomePage> {
     const ShopPage(),
     // * cart page
     const CartPage(),
+    // * order page
+    const OrderPage(),
   ];
 
   // void signOut() {

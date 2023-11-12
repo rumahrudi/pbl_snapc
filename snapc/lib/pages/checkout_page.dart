@@ -29,12 +29,17 @@ class CheckoutPage extends StatefulWidget {
   State<CheckoutPage> createState() => _CheckoutPageState();
 }
 
+List<String> options = ['BCA', 'BNI'];
+
 class _CheckoutPageState extends State<CheckoutPage> {
   // * user
   final currentUser = FirebaseAuth.instance.currentUser!;
 
   // * firestore
   final FirestoreService firestoreService = FirestoreService();
+
+  // * radio contoller
+  String currentOptions = options[0];
 
   // * text controller
   final nameController = TextEditingController();
@@ -66,7 +71,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => const HomePage(initialPageIndex: 1),
+        builder: (context) => const HomePage(initialPageIndex: 2),
       ),
     );
   }
@@ -141,19 +146,17 @@ class _CheckoutPageState extends State<CheckoutPage> {
       return;
     }
 
-    // Jika validasi berhasil, tambahkan data ke Firestore
-    // await FirebaseFirestore.instance.collection('Orders').add({
-    //   'tanggal': DateFormat('EEEE, MMMM d, y').format(_dateTime),
-    // });
-
     await firestoreService.addToOrders(
-        widget.name,
-        currentUser.email!,
-        nameController.text,
-        phoneController.text,
-        DateFormat('EEEE, MMMM d, y').format(_dateTime),
-        addressController.text,
-        widget.revisions);
+      widget.name,
+      currentUser.email!,
+      nameController.text,
+      phoneController.text,
+      DateFormat('EEEE, MMMM d, y').format(_dateTime),
+      addressController.text,
+      widget.revisions,
+      widget.price,
+      currentOptions,
+    );
 
     await firestoreService.deleteCart(widget.docId);
 
@@ -165,9 +168,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
         _navigatePage();
       },
     );
-
-    // * navigate to cart page
-    // _navigatePage();
   }
 
   @override
@@ -185,6 +185,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   const SizedBox(
                     height: 25,
                   ),
+
+                  // * show package choosed from cart
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -199,6 +201,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   const SizedBox(
                     height: 25,
                   ),
+
+                  // * user fill the form
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -245,6 +249,35 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           const SizedBox(
                             height: 10,
                           ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+
+                  // * User choose Schedule date
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(25),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Schedule',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
                           DateField(
                             onTap: _showDatePicker,
                             hintText:
@@ -254,11 +287,85 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       ),
                     ),
                   ),
+
                   const SizedBox(
                     height: 25,
                   ),
+                  // * Payment methode
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(25),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Payment',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
 
-                  // * shcedule
+                          // * Option 1
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.blue[100],
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: RadioListTile(
+                              title: const Text(
+                                'BCA',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              subtitle: const Text('4321234564'),
+                              value: options[0],
+                              groupValue: currentOptions,
+                              onChanged: (value) {
+                                setState(() {
+                                  currentOptions = value.toString();
+                                });
+                              },
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          // * Option 2
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.orange[100],
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: RadioListTile(
+                              title: const Text(
+                                'BNI',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              subtitle: const Text('4321234465'),
+                              value: options[1],
+                              groupValue: currentOptions,
+                              onChanged: (value) {
+                                setState(() {
+                                  currentOptions = value.toString();
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
