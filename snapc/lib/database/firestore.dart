@@ -57,6 +57,7 @@ class FirestoreService {
       'total': total,
       'paymentMethode': paymentMethode,
       'status': 'Belum Bayar',
+      'linkDrive': 'not available',
     });
   }
 

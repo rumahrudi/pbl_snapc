@@ -7,7 +7,7 @@ import 'package:snapc/components/my_button.dart';
 import 'package:snapc/components/my_textfield.dart';
 import 'package:intl/intl.dart';
 import 'package:snapc/database/firestore.dart';
-import 'package:snapc/pages/home_page.dart';
+import 'package:snapc/pages/order_page.dart';
 import 'package:snapc/theme/colors.dart';
 
 class CheckoutPage extends StatefulWidget {
@@ -71,7 +71,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => const HomePage(initialPageIndex: 2),
+        builder: (context) => const OrderPage(),
       ),
     );
   }

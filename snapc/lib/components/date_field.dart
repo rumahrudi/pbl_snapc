@@ -16,10 +16,11 @@ class DateField extends StatelessWidget {
       readOnly: true,
       onTap: onTap,
       decoration: InputDecoration(
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
+          enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
               color: Colors.white,
             ),
+            borderRadius: BorderRadius.circular(12),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(

@@ -43,8 +43,6 @@ class _HomePageState extends State<HomePage> {
     const ShopPage(),
     // * cart page
     const CartPage(),
-    // * order page
-    const OrderPage(),
   ];
 
   // void signOut() {
@@ -66,7 +64,14 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: const EdgeInsets.only(right: 12),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const OrderPage(),
+                  ),
+                );
+              },
               icon: Icon(
                 Icons.shopping_bag,
                 color: secondaryColor,

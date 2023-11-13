@@ -9,18 +9,7 @@ class AboutPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: const MyAppBar(text: 'About Us'),
-      body: Padding(
-        padding: const EdgeInsets.all(25),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('My Orders'),
-            SizedBox(
-              height: 25,
-            ),
-          ],
-        ),
-      ),
+      body: Column(),
     );
   }
 }

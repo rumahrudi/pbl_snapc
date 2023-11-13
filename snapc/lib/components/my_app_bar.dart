@@ -3,7 +3,10 @@ import 'package:snapc/theme/colors.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String text;
-  const MyAppBar({super.key, required this.text});
+  const MyAppBar({
+    super.key,
+    required this.text,
+  });
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -13,6 +16,12 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: secondaryColor,
       elevation: 0,
+      leading: IconButton(
+        icon: Icon(Icons.arrow_back),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
       actions: [
         IconButton(
           onPressed: null,
@@ -22,11 +31,12 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         )
       ],
-      iconTheme: IconThemeData(color: Colors.white),
+      iconTheme: const IconThemeData(color: Colors.white),
       title: Center(
         child: Text(
           text,
-          style: TextStyle(color: Colors.white),
+          style:
+              const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
     );

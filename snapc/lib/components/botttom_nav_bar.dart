@@ -34,10 +34,6 @@ class MyBottomNavBar extends StatelessWidget {
             icon: Icons.shopping_cart,
             text: 'Shop',
           ),
-          GButton(
-            icon: Icons.shopping_bag,
-            text: 'Order',
-          )
         ],
       ),
     );
