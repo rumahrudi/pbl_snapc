@@ -6,6 +6,7 @@ import 'package:snapc/components/cart_item.dart';
 import 'package:snapc/database/firestore.dart';
 import 'package:snapc/models/cart.dart';
 import 'package:snapc/pages/checkout_page.dart';
+import 'package:snapc/theme/colors.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -117,8 +118,8 @@ class _CartPageState extends State<CartPage> {
                 },
               ),
             ),
-            const Divider(
-              color: Colors.white,
+            Divider(
+              color: thirdColor,
             ),
           ],
         ),

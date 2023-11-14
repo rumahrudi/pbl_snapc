@@ -59,18 +59,24 @@ class _CartItemState extends State<CartItem> {
         borderRadius: BorderRadius.circular(12),
       ),
       margin: const EdgeInsets.only(bottom: 8),
-      child: ListTile(
-        leading: Image.asset(widget.imagePath),
-        title: Text('${widget.name} Package'),
-        subtitle: Text('\Rp ${widget.price}k'),
-        trailing: IconButton(
-          onPressed: () {
-            firestoreService.deleteCart(widget.docId);
-            removeItemFromCart();
-          },
-          icon: Icon(
-            Icons.delete,
-            color: secondaryColor,
+      child: Container(
+        decoration: BoxDecoration(
+          color: thirdColor,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: ListTile(
+          leading: Image.asset(widget.imagePath),
+          title: Text('${widget.name} Package'),
+          subtitle: Text('\Rp ${widget.price}k'),
+          trailing: IconButton(
+            onPressed: () {
+              firestoreService.deleteCart(widget.docId);
+              removeItemFromCart();
+            },
+            icon: Icon(
+              Icons.delete,
+              color: secondaryColor,
+            ),
           ),
         ),
       ),

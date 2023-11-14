@@ -23,7 +23,7 @@ class PackageTile extends StatelessWidget {
       // padding: EdgeInsets.all(20),
       width: 250,
       decoration: BoxDecoration(
-        color: Colors.grey[100],
+        color: thirdColor,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(

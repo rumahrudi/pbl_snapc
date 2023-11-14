@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:snapc/components/package_card.dart';
+import 'package:snapc/theme/colors.dart';
 
 class ShopPage extends StatefulWidget {
   const ShopPage({super.key});
@@ -43,26 +44,26 @@ class _ShopPageState extends State<ShopPage> {
           ),
         ),
         // * hot pics
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 25),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              const Text(
+              Text(
                 'Hot Package',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 24,
                 ),
               ),
-              Text(
-                'See all',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey[600],
-                ),
-              ),
+              // Text(
+              //   'See all',
+              //   style: TextStyle(
+              //     fontWeight: FontWeight.bold,
+              //     color: Colors.grey[600],
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -74,10 +75,10 @@ class _ShopPageState extends State<ShopPage> {
         const Expanded(
           child: PackageCard(),
         ),
-        const Padding(
-          padding: EdgeInsets.only(top: 25, left: 25, right: 25),
+        Padding(
+          padding: const EdgeInsets.only(top: 25, left: 25, right: 25),
           child: Divider(
-            color: Colors.white,
+            color: thirdColor,
           ),
         )
       ],

@@ -23,13 +23,13 @@ class OrderItem extends StatefulWidget {
 class _OrderItemState extends State<OrderItem> {
   // * get status color
   Color getStatusColor() {
-    if (widget.status.toLowerCase() == 'waiting for payment') {
+    if (widget.status.toLowerCase() == 'payment') {
       return Colors.red;
     } else if (widget.status.toLowerCase() == 'finish') {
       return Colors.green;
     } else {
       //* Default color
-      return Colors.yellow;
+      return secondaryColor;
     }
   }
 
@@ -39,7 +39,7 @@ class _OrderItemState extends State<OrderItem> {
       padding: const EdgeInsets.only(top: 25),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: thirdColor,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Padding(

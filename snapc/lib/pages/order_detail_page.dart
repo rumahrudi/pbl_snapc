@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:snapc/components/my_app_bar.dart';
+import 'package:snapc/theme/colors.dart';
 
 class OrderDetails extends StatefulWidget {
   final String docId;
@@ -30,13 +31,13 @@ class OrderDetails extends StatefulWidget {
 
 class _OrderDetailsState extends State<OrderDetails> {
   Color getStatusColor() {
-    if (widget.status.toLowerCase() == 'belum bayar') {
+    if (widget.status.toLowerCase() == 'payment') {
       return Colors.red;
-    } else if (widget.status.toLowerCase() == 'sudah bayar') {
+    } else if (widget.status.toLowerCase() == 'finish') {
       return Colors.green;
     } else {
       //* Default color
-      return Colors.yellow;
+      return secondaryColor;
     }
   }
 
@@ -49,7 +50,7 @@ class _OrderDetailsState extends State<OrderDetails> {
       },
       child: Scaffold(
         appBar: const MyAppBar(text: 'D E T A I L S'),
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Colors.white,
         body: Column(
           children: [
             Expanded(
@@ -71,7 +72,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                         decoration: BoxDecoration(
                           color: Colors.transparent,
                           border: Border.all(
-                            color: Colors.green,
+                            color: getStatusColor(),
                           ),
                           borderRadius: BorderRadius.circular(4),
                         ),

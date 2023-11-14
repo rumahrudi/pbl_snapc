@@ -58,7 +58,7 @@ class _PackagesDetailsState extends State<PackagesDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.white,
       appBar: const MyAppBar(text: 'D E T A I L S'),
       body: Column(
         children: [
@@ -131,7 +131,7 @@ class _PackagesDetailsState extends State<PackagesDetails> {
           // * price and buttton
           Container(
             decoration: BoxDecoration(
-              color: Colors.grey[100],
+              color: fourthColor,
             ),
             child: Padding(
               padding: const EdgeInsets.all(25),

@@ -19,7 +19,7 @@ class MyBottomNavBar extends StatelessWidget {
         color: Colors.grey[400],
         activeColor: secondaryColor,
         tabActiveBorder: Border.all(color: Colors.white),
-        tabBackgroundColor: Colors.grey.shade100,
+        tabBackgroundColor: thirdColor,
         mainAxisAlignment: MainAxisAlignment.center,
         tabBorderRadius: 16,
         gap: 8,

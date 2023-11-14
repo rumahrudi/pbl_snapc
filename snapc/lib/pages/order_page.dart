@@ -20,7 +20,7 @@ class _OrderPageState extends State<OrderPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const MyAppBar(text: 'O R D E R'),
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.white,
       body: const Padding(
         padding: EdgeInsets.symmetric(
           horizontal: 25,

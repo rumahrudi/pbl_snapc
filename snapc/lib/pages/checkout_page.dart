@@ -173,7 +173,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.white,
       appBar: const MyAppBar(text: 'C H E C K O U T'),
       body: Column(
         children: [
@@ -189,7 +189,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   // * show package choosed from cart
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: thirdColor,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: ListTile(
@@ -205,7 +205,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   // * user fill the form
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: thirdColor,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Padding(
@@ -260,7 +260,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   // * User choose Schedule date
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: thirdColor,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Padding(
@@ -294,7 +294,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   // * Payment methode
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: thirdColor,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Padding(
@@ -342,7 +342,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           // * Option 2
                           Container(
                             decoration: BoxDecoration(
-                              color: Colors.orange[100],
+                              color: Colors.orange[300],
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: RadioListTile(
