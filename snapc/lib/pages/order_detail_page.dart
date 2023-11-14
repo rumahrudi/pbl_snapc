@@ -2,23 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:snapc/components/my_app_bar.dart';
 
 class OrderDetails extends StatefulWidget {
-  const OrderDetails({super.key});
+  final String docId;
+  final String status;
+  final String date;
+  final String fullName;
+  final String noWa;
+  final String payment;
+  final String typePackage;
+  final String total;
+  final String revisions;
+  const OrderDetails({
+    super.key,
+    required this.docId,
+    required this.status,
+    required this.date,
+    required this.fullName,
+    required this.noWa,
+    required this.payment,
+    required this.typePackage,
+    required this.total,
+    required this.revisions,
+  });
 
   @override
   State<OrderDetails> createState() => _OrderDetailsState();
 }
 
 class _OrderDetailsState extends State<OrderDetails> {
-  // Color getStatusColor() {
-  //   if (widget.status.toLowerCase() == 'belum bayar') {
-  //     return Colors.red;
-  //   } else if (widget.status.toLowerCase() == 'sudah bayar') {
-  //     return Colors.green;
-  //   } else {
-  //     //* Default color
-  //     return Colors.yellow;
-  //   }
-  // }
+  Color getStatusColor() {
+    if (widget.status.toLowerCase() == 'belum bayar') {
+      return Colors.red;
+    } else if (widget.status.toLowerCase() == 'sudah bayar') {
+      return Colors.green;
+    } else {
+      //* Default color
+      return Colors.yellow;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +63,9 @@ class _OrderDetailsState extends State<OrderDetails> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        '#234324235235',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      Text(
+                        '#${widget.docId}',
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Container(
                         decoration: BoxDecoration(
@@ -55,12 +75,12 @@ class _OrderDetailsState extends State<OrderDetails> {
                           ),
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.all(4),
+                        child: Padding(
+                          padding: const EdgeInsets.all(4),
                           child: Text(
-                            'Delivered',
+                            widget.status,
                             style: TextStyle(
-                              color: Colors.green,
+                              color: getStatusColor(),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -71,7 +91,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                   const SizedBox(
                     height: 5,
                   ),
-                  const Text('12 November, 2023'),
+                  Text(widget.date),
                   const SizedBox(
                     height: 15,
                   ),
@@ -80,16 +100,16 @@ class _OrderDetailsState extends State<OrderDetails> {
                   const SizedBox(
                     height: 5,
                   ),
-                  const Row(
+                  Row(
                     children: [
                       Text(
-                        'Rudi Hariadi',
+                        widget.fullName,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 5,
                       ),
                       Text(
-                        '(081308130813)',
+                        '(${widget.noWa})',
                       )
                     ],
                   ),
@@ -109,8 +129,8 @@ class _OrderDetailsState extends State<OrderDetails> {
                   const SizedBox(
                     height: 5,
                   ),
-                  const Text(
-                    'BNI',
+                  Text(
+                    widget.payment,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
@@ -120,34 +140,34 @@ class _OrderDetailsState extends State<OrderDetails> {
                       color: Colors.grey[600],
                     ),
                   ),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Basic Packages',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        widget.typePackage,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        'Rp 100k',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        widget.status,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       )
                     ],
                   ),
                   const SizedBox(
                     height: 15,
                   ),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         'Revisions',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        '3',
-                        style: TextStyle(
+                        widget.revisions,
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -195,7 +215,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                           SizedBox(
                             height: 5,
                           ),
-                          Text('Silahkan Lakukan Pembayaran')
+                          Text('Please Make Payment')
                         ],
                       ),
                     ),

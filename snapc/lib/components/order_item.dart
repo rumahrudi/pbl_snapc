@@ -23,9 +23,9 @@ class OrderItem extends StatefulWidget {
 class _OrderItemState extends State<OrderItem> {
   // * get status color
   Color getStatusColor() {
-    if (widget.status.toLowerCase() == 'belum bayar') {
+    if (widget.status.toLowerCase() == 'waiting for payment') {
       return Colors.red;
-    } else if (widget.status.toLowerCase() == 'sudah bayar') {
+    } else if (widget.status.toLowerCase() == 'finish') {
       return Colors.green;
     } else {
       //* Default color

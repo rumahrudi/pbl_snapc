@@ -38,13 +38,30 @@ class _OrderCardState extends State<OrderCard> {
                 String price = data['total'];
                 String date = data['date'];
                 String status = data['status'];
+                String payment = data['paymentMethode'];
+                String total = data['total'];
+                // String email = data['email'];
+                String revisions = data['revisions'];
+                String typePackage = data['typePackage'];
+                String fullName = data['fullName'];
+                String noWa = data['noWa'];
 
                 return GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const OrderDetails(),
+                          builder: (context) => OrderDetails(
+                            docId: docId,
+                            fullName: fullName,
+                            noWa: noWa,
+                            status: status,
+                            date: date,
+                            payment: payment,
+                            revisions: revisions,
+                            total: total,
+                            typePackage: typePackage,
+                          ),
                         ),
                       );
                     },

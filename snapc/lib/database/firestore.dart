@@ -56,7 +56,7 @@ class FirestoreService {
       'revisions': revisions,
       'total': total,
       'paymentMethode': paymentMethode,
-      'status': 'Belum Bayar',
+      'status': 'Waiting for payment',
       'linkDrive': 'not available',
     });
   }
