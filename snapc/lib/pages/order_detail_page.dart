@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:snapc/components/list_tile_button.dart';
 import 'package:snapc/components/my_app_bar.dart';
+import 'package:snapc/components/my_note.dart';
 import 'package:snapc/theme/colors.dart';
 
 class OrderDetails extends StatefulWidget {
@@ -12,6 +14,9 @@ class OrderDetails extends StatefulWidget {
   final String typePackage;
   final String total;
   final String revisions;
+  final String orderOn;
+  final String expiresOn;
+
   const OrderDetails({
     super.key,
     required this.docId,
@@ -23,6 +28,8 @@ class OrderDetails extends StatefulWidget {
     required this.typePackage,
     required this.total,
     required this.revisions,
+    required this.orderOn,
+    required this.expiresOn,
   });
 
   @override
@@ -41,6 +48,17 @@ class _OrderDetailsState extends State<OrderDetails> {
     }
   }
 
+  // * if status = payment
+  bool shouldShowButton(List<String> allowedStatusList) {
+    String lowerCaseStatus = widget.status.toLowerCase();
+    for (String allowedStatus in allowedStatusList) {
+      if (lowerCaseStatus == allowedStatus.toLowerCase()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -54,258 +72,244 @@ class _OrderDetailsState extends State<OrderDetails> {
         body: Column(
           children: [
             Expanded(
-                child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: ListView(
-                children: [
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '#${widget.docId}',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          border: Border.all(
-                            color: getStatusColor(),
-                          ),
-                          borderRadius: BorderRadius.circular(4),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: ListView(
+                  children: [
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '#${widget.docId}',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(4),
-                          child: Text(
-                            widget.status,
-                            style: TextStyle(
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(widget.date),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    const Text('Booked By',
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          widget.fullName,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          '(${widget.noWa})',
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const Text(
+                      'Bukit Ayu Lestari Blok B No 11 Sei Beduk',
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    const Text(
+                      'Order On',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      widget.orderOn,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 15,
+                      ),
+                      child: Divider(
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // * type package
+                        Text(
+                          '${widget.typePackage} Package',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        // * total
+                        Text(
+                          'Rp ${widget.total}K',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Revisions',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          widget.revisions,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    const Text(
+                      'Additional Features',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const Text(
+                      'Basic photo editing',
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 15,
+                      ),
+                      child: Divider(
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                    // * payment
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        //  * payment methode (Bank)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Payment Methode',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              widget.payment,
+                            ),
+                          ],
+                        ),
+
+                        // * status
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            border: Border.all(
                               color: getStatusColor(),
-                              fontWeight: FontWeight.bold,
+                            ),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(4),
+                            child: Text(
+                              widget.status,
+                              style: TextStyle(
+                                color: getStatusColor(),
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(widget.date),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  const Text('Booked By',
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        widget.fullName,
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        '(${widget.noWa})',
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  const Text(
-                    'Bukit Ayu Lestari Blok B No 11 Sei Beduk',
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  const Text(
-                    'Payment Methode',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    widget.payment,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 15,
+                      ],
                     ),
-                    child: Divider(
-                      color: Colors.grey[600],
+                    const SizedBox(
+                      height: 15,
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        widget.typePackage,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+
+                    // * expires on
+                    const Text(
+                      'Expires On',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
                       ),
-                      Text(
-                        widget.status,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Revisions',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(widget.expiresOn),
+
+                    // * noted
+                    MyNote(
+                      isVisible: shouldShowButton(['payment']),
+                    ),
+
+                    MyTileButton(
+                        isVisible: shouldShowButton(
+                          ['payment'],
                         ),
+                        icon: Icons.photo_album,
+                        title: 'Upload Proof',
+                        subtitle: 'Proof your Payment',
+                        onPressed: () {},
+                        textButton: 'Upload',
+                        colorTile: Colors.blue[100],
+                        color: Colors.blue),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 15,
                       ),
-                      Text(
-                        widget.revisions,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  const Text(
-                    'Additional Features',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  const Text(
-                    'Basic photo editing',
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 15,
-                    ),
-                    child: Divider(
-                      color: Colors.grey[600],
-                    ),
-                  ),
-                  // * noted
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.yellow[100],
-                        borderRadius: BorderRadius.circular(12)),
-                    child: const Padding(
-                      padding: EdgeInsets.all(20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Note',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text('Please Make Payment')
-                        ],
+                      child: Divider(
+                        color: Colors.grey[600],
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 15,
+                    MyTileButton(
+                        isVisible: shouldShowButton(['editing', 'finish']),
+                        icon: Icons.drive_file_move,
+                        title: 'Your Photos',
+                        subtitle: 'Check your Photos',
+                        onPressed: () {},
+                        textButton: 'Visit',
+                        colorTile: Colors.green[100],
+                        color: Colors.green),
+
+                    MyTileButton(
+                        isVisible:
+                            shouldShowButton(['payment', 'editing', 'finish']),
+                        icon: Icons.support_agent,
+                        title: 'Need Support ?',
+                        subtitle: 'Chat with Us',
+                        onPressed: () {},
+                        textButton: 'Chat',
+                        colorTile: Colors.red[100],
+                        color: Colors.red),
+                    const SizedBox(
+                      height: 25,
                     ),
-                    child: Divider(
-                      color: Colors.grey[600],
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.green[100],
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: ListTile(
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 05),
-                      leading: Container(
-                        width: 50,
-                        child: const Center(
-                          child: Icon(
-                            Icons.drive_file_move,
-                            color: Colors.green,
-                          ),
-                        ),
-                      ),
-                      title: const Text(
-                        'Your Photos',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      subtitle: const Text('Check your Photo'),
-                      trailing: TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'Visit',
-                            style: TextStyle(
-                              color: Colors.green,
-                            ),
-                          )),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.orange[100],
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: ListTile(
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 05),
-                      leading: Container(
-                        width: 50,
-                        child: const Center(
-                          child: Icon(
-                            Icons.support_agent,
-                            color: Colors.red,
-                          ),
-                        ),
-                      ),
-                      title: const Text(
-                        'Need Support ?',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      subtitle: const Text('Chat with Us'),
-                      trailing: TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'Chat',
-                            style: TextStyle(
-                              color: Colors.red,
-                            ),
-                          )),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ))
+            )
           ],
         ),
       ),

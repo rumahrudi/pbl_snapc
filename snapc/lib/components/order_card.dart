@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:snapc/components/order_item.dart';
 import 'package:snapc/database/firestore.dart';
 import 'package:snapc/pages/order_detail_page.dart';
@@ -35,7 +36,6 @@ class _OrderCardState extends State<OrderCard> {
                 Map<String, dynamic> data =
                     document.data() as Map<String, dynamic>;
                 String name = data['typePackage'];
-                String price = data['total'];
                 String date = data['date'];
                 String status = data['status'];
                 String payment = data['paymentMethode'];
@@ -45,6 +45,12 @@ class _OrderCardState extends State<OrderCard> {
                 String typePackage = data['typePackage'];
                 String fullName = data['fullName'];
                 String noWa = data['noWa'];
+                Timestamp timeStamp = data['timeStamp'];
+                Timestamp expirationTimestamp = data['expirationTimestamp'];
+
+                // * covert timeStamp to dateTime
+                DateTime orderDateTime = timeStamp.toDate();
+                DateTime expiresDateTime = expirationTimestamp.toDate();
 
                 return GestureDetector(
                     onTap: () {
@@ -61,6 +67,10 @@ class _OrderCardState extends State<OrderCard> {
                             revisions: revisions,
                             total: total,
                             typePackage: typePackage,
+                            orderOn: DateFormat('EEEE, MMMM d, y')
+                                .format(orderDateTime),
+                            expiresOn: DateFormat('EEEE, MMMM d, y')
+                                .format(expiresDateTime),
                           ),
                         ),
                       );
@@ -69,7 +79,7 @@ class _OrderCardState extends State<OrderCard> {
                       docId: docId,
                       date: date,
                       namePackage: name,
-                      price: price,
+                      price: total,
                       status: status,
                     ));
               } else {

@@ -45,6 +45,10 @@ class FirestoreService {
     String total,
     String paymentMethode,
   ) {
+    // Calculate expiration timestamp (current timestamp + 24 hours)
+    DateTime expirationDateTime = DateTime.now().add(const Duration(hours: 24));
+    Timestamp expirationTimestamp = Timestamp.fromDate(expirationDateTime);
+
     return orders.add({
       'typePackage': typePackage,
       'email': email,
@@ -53,10 +57,11 @@ class FirestoreService {
       'date': date,
       'address': address,
       'timeStamp': Timestamp.now(),
+      'expirationTimestamp': expirationTimestamp,
       'revisions': revisions,
       'total': total,
       'paymentMethode': paymentMethode,
-      'status': 'Waiting for payment',
+      'status': 'Payment',
       'linkDrive': 'not available',
     });
   }

@@ -18,10 +18,10 @@ class _OrderPageState extends State<OrderPage> {
   final FirestoreService firestoreService = FirestoreService();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const MyAppBar(text: 'O R D E R'),
+    return const Scaffold(
+      appBar: MyAppBar(text: 'O R D E R'),
       backgroundColor: Colors.white,
-      body: const Padding(
+      body: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: 25,
         ),
