@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:snapc/components/list_tile_button.dart';
 import 'package:snapc/components/my_app_bar.dart';
 import 'package:snapc/components/my_note.dart';
+import 'package:snapc/pages/chat_page.dart';
 import 'package:snapc/theme/colors.dart';
 
 class OrderDetails extends StatefulWidget {
@@ -299,7 +300,14 @@ class _OrderDetailsState extends State<OrderDetails> {
                         icon: Icons.support_agent,
                         title: 'Need Support ?',
                         subtitle: 'Chat with Us',
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ChatPage(),
+                            ),
+                          );
+                        },
                         textButton: 'Chat',
                         colorTile: Colors.red[100],
                         color: Colors.red),
