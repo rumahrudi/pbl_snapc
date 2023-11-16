@@ -15,13 +15,15 @@ class _ChatPageState extends State<ChatPage> {
   final TextEditingController _textController = TextEditingController();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   late final String pengirim;
+  late final String otherUserEmail;
 
   @override
   void initState() {
     super.initState();
-    currentUser =
-        FirebaseAuth.instance.currentUser!; //* Move initialization here
-    pengirim = currentUser.email.toString(); //* Move initialization here
+    currentUser = FirebaseAuth.instance.currentUser!;
+    pengirim = currentUser.email.toString();
+    //* dibawah ini akan di ubah menjadi widget.email dari halaman sebelumnya di admin dasboard
+    otherUserEmail = 'didi@gmail.com';
   }
 
   @override
@@ -34,11 +36,12 @@ class _ChatPageState extends State<ChatPage> {
             child: StreamBuilder<QuerySnapshot>(
               stream: _firestore
                   .collection('messages')
+                  .where('sender', whereIn: [pengirim, otherUserEmail])
                   .orderBy('timestamp')
                   .snapshots(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
-                  return const CircularProgressIndicator();
+                  return const Center(child: CircularProgressIndicator());
                 }
 
                 var messages = snapshot.data!.docs;
@@ -70,7 +73,10 @@ class _ChatPageState extends State<ChatPage> {
 
   Widget _buildTextComposer() {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.symmetric(
+        vertical: 10,
+        horizontal: 25,
+      ),
       child: Container(
         decoration: BoxDecoration(
             color: Colors.grey[300], borderRadius: BorderRadius.circular(12)),
@@ -139,19 +145,20 @@ class MessageWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment:
+                    isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                 children: [
                   Text(
                     getSenderName(),
                     style: TextStyle(
-                      color: isMe ? Colors.white : Colors.black,
+                      color: isMe ? Colors.white : Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 5),
                   Wrap(
                     children: [
-                      Container(
+                      SizedBox(
                         width: MediaQuery.of(context).size.width -
                             180, // Atur lebar sesuai kebutuhan Anda
                         child: Text(

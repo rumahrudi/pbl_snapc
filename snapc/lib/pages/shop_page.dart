@@ -19,16 +19,17 @@ class _ShopPageState extends State<ShopPage> {
           padding: const EdgeInsets.all(12),
           margin: const EdgeInsets.symmetric(horizontal: 25),
           decoration: BoxDecoration(
-              color: Colors.grey[200], borderRadius: BorderRadius.circular(8)),
+              color: thirdColor, borderRadius: BorderRadius.circular(8)),
           child: const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Search',
-                style: TextStyle(color: Colors.grey),
+                'Welcome Back',
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
               Icon(
-                Icons.search,
+                Icons.home,
                 color: Colors.grey,
               ),
             ],
