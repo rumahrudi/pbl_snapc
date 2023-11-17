@@ -19,14 +19,18 @@ class _ShopPageState extends State<ShopPage> {
           padding: const EdgeInsets.all(12),
           margin: const EdgeInsets.symmetric(horizontal: 25),
           decoration: BoxDecoration(
-              color: thirdColor, borderRadius: BorderRadius.circular(8)),
+            color: thirdColor,
+            borderRadius: BorderRadius.circular(8),
+          ),
           child: const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 'Welcome Back',
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               Icon(
                 Icons.home,
@@ -77,7 +81,11 @@ class _ShopPageState extends State<ShopPage> {
           child: PackageCard(),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 25, left: 25, right: 25),
+          padding: const EdgeInsets.only(
+            top: 25,
+            left: 25,
+            right: 25,
+          ),
           child: Divider(
             color: thirdColor,
           ),

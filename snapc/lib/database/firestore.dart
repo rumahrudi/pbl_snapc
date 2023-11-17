@@ -13,6 +13,10 @@ class FirestoreService {
   final CollectionReference orders =
       FirebaseFirestore.instance.collection('Orders');
 
+  // * get collection of gallery
+  final CollectionReference gallery =
+      FirebaseFirestore.instance.collection('Gallery');
+
   // ? CREATE
 
   // * add to cart
@@ -45,7 +49,7 @@ class FirestoreService {
     String total,
     String paymentMethode,
   ) {
-    // Calculate expiration timestamp (current timestamp + 24 hours)
+    //* Calculate expiration timestamp (current timestamp + 24 hours)
     DateTime expirationDateTime = DateTime.now().add(const Duration(hours: 24));
     Timestamp expirationTimestamp = Timestamp.fromDate(expirationDateTime);
 
@@ -63,6 +67,15 @@ class FirestoreService {
       'paymentMethode': paymentMethode,
       'status': 'Payment',
       'linkDrive': 'not available',
+    });
+  }
+
+  // * add to gallery
+  Future<void> addToGallery() {
+    return gallery.add({
+      'type': 'Basic',
+      'timeStamp': Timestamp.now(),
+      'link': 'lib/images/logo.png'
     });
   }
 
@@ -93,6 +106,14 @@ class FirestoreService {
         .snapshots();
 
     return ordersStream;
+  }
+
+  // * read gallery
+  Stream<QuerySnapshot> getGalleryStream() {
+    final galleryStream =
+        gallery.orderBy('timeStamp', descending: true).snapshots();
+
+    return galleryStream;
   }
 
   // ? UPDATE

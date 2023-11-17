@@ -119,7 +119,12 @@ class MessageWidget extends StatelessWidget {
   final String text;
   final bool isMe;
 
-  MessageWidget({required this.sender, required this.text, required this.isMe});
+  const MessageWidget({
+    super.key,
+    required this.sender,
+    required this.text,
+    required this.isMe,
+  });
 
   String getSenderName() {
     return sender.split('@').first;

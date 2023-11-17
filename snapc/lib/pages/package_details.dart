@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:snapc/components/my_app_bar.dart';
 import 'package:snapc/components/my_button.dart';
+import 'package:snapc/components/package_card.dart';
 import 'package:snapc/database/firestore.dart';
 import 'package:snapc/theme/colors.dart';
 
@@ -77,6 +78,28 @@ class _PackagesDetailsState extends State<PackagesDetails> {
                   const SizedBox(
                     height: 25,
                   ),
+
+                  // * food name
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '${widget.name} Package',
+                        style: GoogleFonts.dmSerifDisplay(fontSize: 18),
+                      ),
+                      Text(
+                        'Rp ${widget.price}K',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: secondaryColor),
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  // * rating
                   Row(
                     children: [
                       // * star icon
@@ -99,31 +122,39 @@ class _PackagesDetailsState extends State<PackagesDetails> {
                   const SizedBox(
                     height: 10,
                   ),
-                  // * food name
+                  // * description
                   Text(
-                    widget.name,
-                    style: GoogleFonts.dmSerifDisplay(fontSize: 28),
+                    textAlign: TextAlign.justify,
+                    widget.decs,
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 14,
+                      height: 2,
+                    ),
                   ),
                   const SizedBox(
                     height: 25,
                   ),
-                  // * description
-                  Text(
-                    'Description',
+
+                  // * reference
+                  const Text(
+                    'Package Gallery',
                     style: TextStyle(
-                      color: Colors.grey[900],
-                      fontWeight: FontWeight.bold,
                       fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 25,
                   ),
-                  Text(
-                    widget.decs,
-                    style: TextStyle(
-                        color: Colors.grey[600], fontSize: 14, height: 2),
+                  // * gallery
+                  const SizedBox(
+                    height: 330,
+                    child: PackageCard(),
                   ),
+                  const SizedBox(
+                    height: 25,
+                  )
                 ],
               ),
             ),
@@ -131,7 +162,7 @@ class _PackagesDetailsState extends State<PackagesDetails> {
           // * price and buttton
           Container(
             decoration: BoxDecoration(
-              color: fourthColor,
+              color: thirdColor,
             ),
             child: Padding(
               padding: const EdgeInsets.all(25),
