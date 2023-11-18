@@ -73,7 +73,10 @@ class _DasboardState extends State<Dasboard> {
                 padding: EdgeInsets.all(15),
                 child: Text(
                   'Add Gallery',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),

@@ -203,191 +203,148 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   ),
 
                   // * user fill the form
-                  Container(
-                    decoration: BoxDecoration(
-                      color: thirdColor,
-                      borderRadius: BorderRadius.circular(12),
+                  const Text(
+                    'Form Booking',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Form Booking',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          MyTextField(
-                            controller: nameController,
-                            hintText: 'Full Name',
-                            obsecureText: false,
-                            readOnly: false,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          MyTextField(
-                            controller: phoneController,
-                            hintText: 'No WhatsApp',
-                            obsecureText: false,
-                            readOnly: false,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          MyTextField(
-                              controller: addressController,
-                              hintText: 'Address',
-                              obsecureText: false,
-                              readOnly: false),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      ),
-                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  MyTextField(
+                    controller: nameController,
+                    hintText: 'Full Name',
+                    obsecureText: false,
+                    readOnly: false,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  MyTextField(
+                    controller: phoneController,
+                    hintText: 'No WhatsApp',
+                    obsecureText: false,
+                    readOnly: false,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  MyTextField(
+                      controller: addressController,
+                      hintText: 'Address',
+                      obsecureText: false,
+                      readOnly: false),
+                  const SizedBox(
+                    height: 10,
                   ),
                   const SizedBox(
                     height: 25,
                   ),
 
                   // * User choose Schedule date
-                  Container(
-                    decoration: BoxDecoration(
-                      color: thirdColor,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(25),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Schedule',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          DateField(
-                            onTap: _showDatePicker,
-                            hintText:
-                                DateFormat('EEEE, MMMM d, y').format(_dateTime),
-                          ),
-                        ],
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Schedule',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
                       ),
-                    ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      DateField(
+                        onTap: _showDatePicker,
+                        hintText:
+                            DateFormat('EEEE, MMMM d, y').format(_dateTime),
+                      ),
+                    ],
                   ),
 
                   const SizedBox(
                     height: 25,
                   ),
                   // * Payment methode
+                  const Text(
+                    'Payment',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+
+                  // * Option 1
                   Container(
                     decoration: BoxDecoration(
                       color: thirdColor,
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(25),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Payment',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-
-                          // * Option 1
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.blue[100],
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: RadioListTile(
-                              title: const Text(
-                                'BCA',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              subtitle: const Text('4321234564'),
-                              value: options[0],
-                              groupValue: currentOptions,
-                              onChanged: (value) {
-                                setState(() {
-                                  currentOptions = value.toString();
-                                });
-                              },
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          // * Option 2
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.orange[300],
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: RadioListTile(
-                              title: const Text(
-                                'BNI',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              subtitle: const Text('4321234465'),
-                              value: options[1],
-                              groupValue: currentOptions,
-                              onChanged: (value) {
-                                setState(() {
-                                  currentOptions = value.toString();
-                                });
-                              },
-                            ),
-                          ),
-                        ],
+                    child: RadioListTile(
+                      title: const Text(
+                        'BCA',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
+                      subtitle: const Text('4321234564'),
+                      value: options[0],
+                      groupValue: currentOptions,
+                      onChanged: (value) {
+                        setState(() {
+                          currentOptions = value.toString();
+                        });
+                      },
                     ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[100],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(25),
-              child: Column(
-                children: [
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  // * Option 2
+                  Container(
+                    decoration: BoxDecoration(
+                      color: thirdColor,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: RadioListTile(
+                      title: const Text(
+                        'BNI',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: const Text('4321234465'),
+                      value: options[1],
+                      groupValue: currentOptions,
+                      onChanged: (value) {
+                        setState(() {
+                          currentOptions = value.toString();
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
                   MyButton(
                     text: 'Checkout',
                     onTap: () {
                       _submitForm();
                     },
-                  )
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );

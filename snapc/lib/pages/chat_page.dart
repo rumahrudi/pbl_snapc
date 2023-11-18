@@ -35,7 +35,7 @@ class _ChatPageState extends State<ChatPage> {
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
               stream: _firestore
-                  .collection('messages')
+                  .collection('Messages')
                   .where('sender', whereIn: [pengirim, otherUserEmail])
                   .orderBy('timestamp')
                   .snapshots(),
@@ -106,7 +106,7 @@ class _ChatPageState extends State<ChatPage> {
 
   void _handleSubmitted(String text) {
     _textController.clear();
-    _firestore.collection('messages').add({
+    _firestore.collection('Messages').add({
       'text': text,
       'sender': pengirim,
       'timestamp': FieldValue.serverTimestamp(),
