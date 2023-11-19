@@ -9,7 +9,7 @@ class AboutPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: const MyAppBar(text: 'About Us'),
-      body: Column(),
+      body: const Column(),
     );
   }
 }

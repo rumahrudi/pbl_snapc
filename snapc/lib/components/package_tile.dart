@@ -65,7 +65,7 @@ class PackageTile extends StatelessWidget {
                     ),
                     // * price
                     Text(
-                      '\Rp ${price}k',
+                      'Rp ${price}k',
                       style: const TextStyle(color: Colors.grey),
                     )
                   ],

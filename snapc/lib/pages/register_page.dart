@@ -8,7 +8,7 @@ import 'package:snapc/theme/colors.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
-  RegisterPage({
+  const RegisterPage({
     super.key,
     required this.onTap,
   });
@@ -153,6 +153,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     //* sign in button
                     MyButton(
+                      isVisible: true,
                       text: 'Sign Up',
                       onTap: signUp,
                     ),
@@ -175,7 +176,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         GestureDetector(
                           onTap: widget.onTap,
-                          child: Text(
+                          child: const Text(
                             'Login now',
                             style: TextStyle(
                               color: Colors.blue,

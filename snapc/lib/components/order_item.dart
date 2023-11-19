@@ -27,6 +27,8 @@ class _OrderItemState extends State<OrderItem> {
       return Colors.red;
     } else if (widget.status.toLowerCase() == 'finish') {
       return Colors.green;
+    } else if (widget.status.toLowerCase() == 'photo session') {
+      return Colors.purple;
     } else {
       //* Default color
       return secondaryColor;

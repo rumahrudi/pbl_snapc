@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:snapc/components/my_app_bar.dart';
 import 'package:snapc/components/my_button.dart';
-import 'package:snapc/components/package_card.dart';
 import 'package:snapc/database/firestore.dart';
 import 'package:snapc/theme/colors.dart';
 
@@ -147,14 +146,14 @@ class _PackagesDetailsState extends State<PackagesDetails> {
                   const SizedBox(
                     height: 25,
                   ),
-                  // * gallery
-                  const SizedBox(
-                    height: 330,
-                    child: PackageCard(),
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  )
+                  // // * gallery
+                  // const SizedBox(
+                  //   height: 330,
+                  //   child: PackageCard(),
+                  // ),
+                  // const SizedBox(
+                  //   height: 25,
+                  // )
                 ],
               ),
             ),
@@ -172,6 +171,7 @@ class _PackagesDetailsState extends State<PackagesDetails> {
 
                   // * button
                   MyButton(
+                    isVisible: true,
                     text: 'Add To Cart',
                     onTap: () {
                       // * add package to cart

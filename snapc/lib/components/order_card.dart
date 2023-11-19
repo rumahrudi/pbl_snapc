@@ -46,11 +46,9 @@ class _OrderCardState extends State<OrderCard> {
                 String fullName = data['fullName'];
                 String noWa = data['noWa'];
                 Timestamp timeStamp = data['timeStamp'];
-                Timestamp expirationTimestamp = data['expirationTimestamp'];
 
                 // * covert timeStamp to dateTime
                 DateTime orderDateTime = timeStamp.toDate();
-                DateTime expiresDateTime = expirationTimestamp.toDate();
 
                 return GestureDetector(
                     onTap: () {
@@ -69,8 +67,6 @@ class _OrderCardState extends State<OrderCard> {
                             typePackage: typePackage,
                             orderOn: DateFormat('EEEE, MMMM d, y')
                                 .format(orderDateTime),
-                            expiresOn: DateFormat('EEEE, MMMM d, y')
-                                .format(expiresDateTime),
                           ),
                         ),
                       );

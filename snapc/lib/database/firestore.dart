@@ -43,30 +43,23 @@ class FirestoreService {
     String email,
     String fullName,
     String noWa,
-    String date,
-    String address,
     String revisions,
     String total,
     String paymentMethode,
   ) {
-    //* Calculate expiration timestamp (current timestamp + 24 hours)
-    DateTime expirationDateTime = DateTime.now().add(const Duration(hours: 24));
-    Timestamp expirationTimestamp = Timestamp.fromDate(expirationDateTime);
-
     return orders.add({
       'typePackage': typePackage,
       'email': email,
       'fullName': fullName,
       'noWa': noWa,
-      'date': date,
-      'address': address,
+      'date': 'Not Schedule',
       'timeStamp': Timestamp.now(),
-      'expirationTimestamp': expirationTimestamp,
       'revisions': revisions,
       'total': total,
       'paymentMethode': paymentMethode,
       'status': 'Payment',
       'linkDrive': 'not available',
+      'proofPayment': 'No Image'
     });
   }
 
@@ -117,6 +110,30 @@ class FirestoreService {
   }
 
   // ? UPDATE
+
+  // * update proof order
+  Future<void> updateProofOrder(
+    String docId,
+    String proofPayment,
+  ) {
+    return orders.doc(docId).update({
+      'proofPayment': proofPayment,
+      'status': 'Confirmation',
+      'timeStamp': Timestamp.now(),
+    });
+  }
+
+  // * update schedule order
+  Future<void> updateSchedule(
+    String docId,
+    String date,
+  ) {
+    return orders.doc(docId).update({
+      'date': date,
+      'status': 'Photo session',
+      'timeStamp': Timestamp.now(),
+    });
+  }
 
   // ? DELETE
 

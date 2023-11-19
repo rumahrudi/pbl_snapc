@@ -1,7 +1,17 @@
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:snapc/components/date_field.dart';
 import 'package:snapc/components/list_tile_button.dart';
 import 'package:snapc/components/my_app_bar.dart';
+import 'package:snapc/components/my_button.dart';
+import 'package:snapc/components/my_gap.dart';
 import 'package:snapc/components/my_note.dart';
+import 'package:snapc/database/firestore.dart';
 import 'package:snapc/pages/chat_page.dart';
 import 'package:snapc/theme/colors.dart';
 
@@ -16,7 +26,6 @@ class OrderDetails extends StatefulWidget {
   final String total;
   final String revisions;
   final String orderOn;
-  final String expiresOn;
 
   const OrderDetails({
     super.key,
@@ -30,7 +39,6 @@ class OrderDetails extends StatefulWidget {
     required this.total,
     required this.revisions,
     required this.orderOn,
-    required this.expiresOn,
   });
 
   @override
@@ -38,14 +46,33 @@ class OrderDetails extends StatefulWidget {
 }
 
 class _OrderDetailsState extends State<OrderDetails> {
+  // * firestore
+  final FirestoreService firestoreService = FirestoreService();
+
+  // * global key
+  GlobalKey<FormState> key = GlobalKey();
+
+  // * colour status
   Color getStatusColor() {
     if (widget.status.toLowerCase() == 'payment') {
       return Colors.red;
     } else if (widget.status.toLowerCase() == 'finish') {
       return Colors.green;
+    } else if (widget.status.toLowerCase() == 'photo session') {
+      return Colors.purple;
     } else {
       //* Default color
       return secondaryColor;
+    }
+  }
+
+  // * payment methode status
+
+  String _getNorek() {
+    if (widget.payment.toLowerCase() == 'bni') {
+      return ' (4321234465)';
+    } else {
+      return ' (4321234564)';
     }
   }
 
@@ -58,6 +85,184 @@ class _OrderDetailsState extends State<OrderDetails> {
       }
     }
     return false;
+  }
+
+  // * date time now
+
+  DateTime _dateTime = DateTime.now();
+
+  // * show date picker
+
+  void _showDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2030),
+    ).then((value) {
+      if (value != null) {
+        setState(() {
+          _dateTime = value;
+        });
+      }
+    });
+  }
+
+  //* Function to show AlertDialog
+  void _showAlertDialog(
+      String title, String content, void Function()? onPressed) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        backgroundColor:
+            secondaryColor, // Sesuaikan warna latar belakang sesuai keinginan
+        title: Center(
+          child: Text(
+            title,
+            style: const TextStyle(color: Colors.white),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        content: Text(
+          content,
+          style: const TextStyle(color: Colors.white),
+          textAlign: TextAlign.center,
+        ),
+        actions: [
+          TextButton(
+            onPressed: onPressed,
+            child: const Text(
+              'O K',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  String imageUrl = '';
+
+  XFile? _pickedImage;
+
+  Future<void> _pickImage() async {
+    ImagePicker imagePicker = ImagePicker();
+    _pickedImage = await imagePicker.pickImage(source: ImageSource.gallery);
+    print('${_pickedImage?.path}');
+    if (_pickedImage != null) {
+      setState(() {});
+    }
+  }
+
+  // * upload image
+  Future<void> _uploadImage() async {
+    if (_pickedImage == null) {
+      return;
+    }
+
+    try {
+      String fileName =
+          _pickedImage!.name; // Mengambil nama file asli dari XFile
+      Reference referenceRoot = FirebaseStorage.instance.ref();
+      Reference referenceDirImages = referenceRoot.child('images');
+      Reference referenceImageToUpload = referenceDirImages.child(fileName);
+
+      File imageFile = File(_pickedImage!.path);
+      List<int> imageBytes = await imageFile.readAsBytes();
+
+      print("Uploading image to Firebase Storage...");
+      await referenceImageToUpload.putData(
+        Uint8List.fromList(imageBytes),
+        SettableMetadata(contentType: 'auto'),
+      );
+      print("Image uploaded successfully.");
+
+      print("Getting download URL...");
+      imageUrl = await referenceImageToUpload.getDownloadURL();
+      print("Download URL: $imageUrl");
+    } catch (error) {
+      print("Error during image upload: $error");
+    }
+  }
+
+  // * upate image to database
+  void _submitFormImage() async {
+    print("Submitting form...");
+    await _uploadImage();
+    print("Image uploaded. Image URL: $imageUrl");
+
+    if (imageUrl.isEmpty) {
+      print("Image URL is empty. Showing snackbar.");
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please upload an image')));
+      return;
+    }
+
+    await firestoreService.updateProofOrder(
+      widget.docId,
+      imageUrl,
+    );
+
+    _showAlertDialog(
+      'Success',
+      'Successfully Update Order',
+      () {
+        Navigator.pop(context);
+        Navigator.pop(context);
+      },
+    );
+  }
+
+  // * upadte date order
+  void _submitForm() async {
+    //* Pemeriksaan hari untuk Sabtu atau Minggu
+    if (_dateTime.weekday == DateTime.saturday ||
+        _dateTime.weekday == DateTime.sunday) {
+      _showAlertDialog(
+        'Invalid Date',
+        'Sorry, you cannot select a holiday (Saturday or Sunday)',
+        () {
+          Navigator.pop(context);
+        },
+      );
+      return;
+    }
+
+    //* Pemeriksaan apakah tanggal sudah penuh
+    final QuerySnapshot<Map<String, dynamic>> orders = await FirebaseFirestore
+        .instance
+        .collection('Orders')
+        .where('date',
+            isEqualTo: DateFormat('EEEE, MMMM d, y').format(_dateTime))
+        .get();
+
+    if (orders.docs.length >= 3) {
+      _showAlertDialog(
+        'An Error Occurred',
+        'Maaf, tanggal tersebut sudah penuh.',
+        () {
+          Navigator.pop(context);
+        },
+      );
+      return;
+    }
+
+    await firestoreService.updateSchedule(
+      widget.docId,
+      DateFormat('EEEE, MMMM d, y').format(_dateTime),
+    );
+
+    _showAlertDialog(
+      'Success',
+      'Successfully Update Order',
+      () {
+        Navigator.pop(context);
+        Navigator.pop(context);
+      },
+    );
   }
 
   @override
@@ -114,12 +319,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                         )
                       ],
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    const Text(
-                      'Bukit Ayu Lestari Blok B No 11 Sei Beduk',
-                    ),
+
                     const SizedBox(
                       height: 15,
                     ),
@@ -217,7 +417,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                               height: 5,
                             ),
                             Text(
-                              widget.payment,
+                              widget.payment + _getNorek(),
                             ),
                           ],
                         ),
@@ -244,38 +444,56 @@ class _OrderDetailsState extends State<OrderDetails> {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-
-                    // * expires on
-                    const Text(
-                      'Expires On',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(widget.expiresOn),
-
-                    // * noted
+                    // * note confirmation
+                    MyNote(
+                        isVisible: shouldShowButton(['confirmation']),
+                        note: 'Please wait confirmation payment from admin'),
+                    // * note payment
                     MyNote(
                       isVisible: shouldShowButton(['payment']),
+                      note: 'Please make Payment and upload your proof!',
                     ),
 
                     MyTileButton(
+                        onTap: _pickImage,
                         isVisible: shouldShowButton(
                           ['payment'],
                         ),
                         icon: Icons.photo_album,
-                        title: 'Upload Proof',
-                        subtitle: 'Proof your Payment',
+                        title: 'Pick Image',
+                        subtitle: 'Tap to pick image',
                         onPressed: () {},
-                        textButton: 'Upload',
+                        textButton: 'Pick',
                         colorTile: Colors.blue[100],
                         color: Colors.blue),
+                    MyGap(
+                      height: 15,
+                      isVisible: shouldShowButton(['payment', 'schedule']),
+                    ),
+                    // * upload button
+                    MyButton(
+                      text: 'Upload',
+                      onTap: _submitFormImage,
+                      isVisible: shouldShowButton(['payment']),
+                    ),
+                    DateField(
+                      isVisible: shouldShowButton(['schedule']),
+                      onTap: _showDatePicker,
+                      hintText: DateFormat('EEEE, MMMM d, y').format(_dateTime),
+                    ),
+                    MyGap(
+                      height: 15,
+                      isVisible: shouldShowButton(['schedule']),
+                    ),
+                    // * shedule button
+                    MyButton(
+                      text: 'Schedule',
+                      onTap: _submitForm,
+                      isVisible: shouldShowButton(
+                        ['schedule'],
+                      ),
+                    ),
+
                     Padding(
                       padding: const EdgeInsets.only(
                         top: 15,
@@ -285,7 +503,9 @@ class _OrderDetailsState extends State<OrderDetails> {
                       ),
                     ),
                     MyTileButton(
-                        isVisible: shouldShowButton(['editing', 'finish']),
+                        onTap: () {},
+                        isVisible: shouldShowButton(
+                            ['editing', 'finish', 'photo session']),
                         icon: Icons.drive_file_move,
                         title: 'Your Photos',
                         subtitle: 'Check your Photos',
@@ -295,8 +515,9 @@ class _OrderDetailsState extends State<OrderDetails> {
                         color: Colors.green),
 
                     MyTileButton(
-                        isVisible:
-                            shouldShowButton(['payment', 'editing', 'finish']),
+                        onTap: () {},
+                        isVisible: shouldShowButton(
+                            ['payment', 'editing', 'finish', 'photo session']),
                         icon: Icons.support_agent,
                         title: 'Need Support ?',
                         subtitle: 'Chat with Us',

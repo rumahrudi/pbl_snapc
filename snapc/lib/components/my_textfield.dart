@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MyTextField extends StatelessWidget {
-  final controller;
+  final TextEditingController? controller;
   final String hintText;
   final bool obsecureText;
   final bool readOnly;
@@ -22,7 +22,7 @@ class MyTextField extends StatelessWidget {
       readOnly: readOnly,
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               color: Colors.white,
             ),
             borderRadius: BorderRadius.circular(12),

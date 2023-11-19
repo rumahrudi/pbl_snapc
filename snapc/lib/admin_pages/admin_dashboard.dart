@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:snapc/admin_pages/image.dart';
+import 'package:snapc/admin_pages/upload_ref.dart';
 import 'package:snapc/auth/auth.dart';
+import 'package:snapc/components/admin_card.dart';
 import 'package:snapc/components/my_app_bar.dart';
 import 'package:snapc/database/firestore.dart';
 import 'package:snapc/theme/colors.dart';
@@ -36,13 +39,13 @@ class _DasboardState extends State<Dasboard> {
         backgroundColor: secondaryColor,
         title: const Center(
           child: Text(
-            'Successfully Add to Gallery',
+            'Success',
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.white),
           ),
         ),
         content: const Text(
-          'Check yout gallery',
+          'Successfully Add to Gallery',
           style: TextStyle(color: Colors.white),
           textAlign: TextAlign.center,
         ),
@@ -53,36 +56,54 @@ class _DasboardState extends State<Dasboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
-      appBar: const MyAppBar(
-        text: 'Dashboard',
-      ),
-      body: Scaffold(
-        body: Center(
-          child: GestureDetector(
-            onTap: () {
-              firestoreService.addToGallery();
-              allertAddToGallery();
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.all(15),
-                child: Text(
-                  'Add Gallery',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ),
+        backgroundColor: Colors.white,
+        appBar: const MyAppBar(
+          text: 'Dashboard',
         ),
-      ),
-    );
+        body: Padding(
+          padding: const EdgeInsets.all(25),
+          child: GridView.count(
+            crossAxisCount: 2,
+            children: [
+              AdminCard(
+                onTap: () {},
+                icon: Icons.person,
+                title: 'U S E R S',
+                color: Colors.amber,
+              ),
+              AdminCard(
+                color: Colors.pink,
+                icon: Icons.message,
+                title: 'C H A T S',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MyUpload(),
+                    ),
+                  );
+                },
+              ),
+              AdminCard(
+                  onTap: () {},
+                  icon: Icons.date_range,
+                  title: 'S C H E D U L E',
+                  color: Colors.blue),
+              AdminCard(
+                color: Colors.purple,
+                icon: Icons.image,
+                title: 'G A L L E R Y',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AddItem(),
+                    ),
+                  );
+                },
+              )
+            ],
+          ),
+        ));
   }
 }

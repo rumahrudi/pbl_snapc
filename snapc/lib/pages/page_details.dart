@@ -100,7 +100,7 @@ class _PageDetailsState extends State<PageDetails> {
                       fontSize: 18,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
                   Text(
@@ -125,6 +125,7 @@ class _PageDetailsState extends State<PageDetails> {
 
                   // * button
                   MyButton(
+                    isVisible: true,
                     text: 'Add To Cart',
                     onTap: () => addPhotoPackageToCart(widget.photo),
                   )

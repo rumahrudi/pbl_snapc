@@ -67,7 +67,7 @@ class _CartItemState extends State<CartItem> {
         child: ListTile(
           leading: Image.asset(widget.imagePath),
           title: Text('${widget.name} Package'),
-          subtitle: Text('\Rp ${widget.price}k'),
+          subtitle: Text('Rp ${widget.price}k'),
           trailing: IconButton(
             onPressed: () {
               firestoreService.deleteCart(widget.docId);

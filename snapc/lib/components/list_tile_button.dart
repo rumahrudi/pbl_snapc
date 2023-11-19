@@ -5,6 +5,7 @@ class MyTileButton extends StatelessWidget {
   final String title;
   final String subtitle;
   final Function() onPressed;
+  final Function()? onTap;
   final String textButton;
   final Color? colorTile;
   final Color color;
@@ -16,10 +17,11 @@ class MyTileButton extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.onPressed,
+    required this.onTap,
     required this.textButton,
     required this.colorTile,
     required this.color,
-    required this.isVisible, // Tambahkan properti isVisible
+    required this.isVisible,
   }) : super(key: key);
 
   @override
@@ -34,8 +36,9 @@ class MyTileButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: ListTile(
+                onTap: onTap,
                 contentPadding: const EdgeInsets.symmetric(horizontal: 05),
-                leading: Container(
+                leading: SizedBox(
                   width: 50,
                   child: Center(
                     child: Icon(

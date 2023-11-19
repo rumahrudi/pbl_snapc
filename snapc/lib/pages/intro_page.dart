@@ -60,6 +60,7 @@ class IntroPage extends StatelessWidget {
               ),
               // * start now
               MyButton(
+                isVisible: true,
                 text: 'Book Now',
                 onTap: () {
                   Navigator.push(

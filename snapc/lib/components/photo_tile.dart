@@ -62,7 +62,7 @@ class PhotoTile extends StatelessWidget {
                     ),
                     // * price
                     Text(
-                      '\Rp${photo.price}',
+                      'Rp${photo.price}',
                       style: const TextStyle(color: Colors.grey),
                     )
                   ],

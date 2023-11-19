@@ -1,11 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:snapc/components/date_field.dart';
+
 import 'package:snapc/components/my_app_bar.dart';
 import 'package:snapc/components/my_button.dart';
 import 'package:snapc/components/my_textfield.dart';
-import 'package:intl/intl.dart';
 import 'package:snapc/database/firestore.dart';
 import 'package:snapc/pages/order_page.dart';
 import 'package:snapc/theme/colors.dart';
@@ -44,29 +42,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
   // * text controller
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
-  final addressController = TextEditingController();
 
-  // * date time now
-
-  DateTime _dateTime = DateTime.now();
-
-  // * show date picker
-
-  void _showDatePicker() {
-    showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2030),
-    ).then((value) {
-      if (value != null) {
-        setState(() {
-          _dateTime = value;
-        });
-      }
-    });
-  }
-
+  // * navigate
   void _navigatePage() {
     Navigator.pushReplacement(
       context,
@@ -119,30 +96,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
     if ([
       nameController,
       phoneController,
-      addressController,
     ].any((controller) => controller.text.isEmpty)) {
       _showAlertDialog('An Error Occurred', 'Form not completed', () {
         Navigator.pop(context);
       });
-      return;
-    }
-
-    //* take date drom col orders
-    final QuerySnapshot<Map<String, dynamic>> orders = await FirebaseFirestore
-        .instance
-        .collection('Orders')
-        .where('date',
-            isEqualTo: DateFormat('EEEE, MMMM d, y').format(_dateTime))
-        .get();
-
-    if (orders.docs.length >= 3) {
-      _showAlertDialog(
-        'An Error Occurred',
-        'Maaf, tanggal tersebut sudah penuh.',
-        () {
-          Navigator.pop(context);
-        },
-      );
       return;
     }
 
@@ -151,8 +108,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
       currentUser.email!,
       nameController.text,
       phoneController.text,
-      DateFormat('EEEE, MMMM d, y').format(_dateTime),
-      addressController.text,
       widget.revisions,
       widget.price,
       currentOptions,
@@ -229,43 +184,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     readOnly: false,
                   ),
                   const SizedBox(
-                    height: 10,
-                  ),
-                  MyTextField(
-                      controller: addressController,
-                      hintText: 'Address',
-                      obsecureText: false,
-                      readOnly: false),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-
-                  // * User choose Schedule date
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Schedule',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      DateField(
-                        onTap: _showDatePicker,
-                        hintText:
-                            DateFormat('EEEE, MMMM d, y').format(_dateTime),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(
                     height: 25,
                   ),
                   // * Payment methode
@@ -333,6 +251,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     height: 25,
                   ),
                   MyButton(
+                    isVisible: true,
                     text: 'Checkout',
                     onTap: () {
                       _submitForm();
