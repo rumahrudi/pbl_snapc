@@ -1,6 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirestoreService {
+  // * get collection of user
+  final CollectionReference users =
+      FirebaseFirestore.instance.collection('Users');
+
   // * get collection of packages
   final CollectionReference packages =
       FirebaseFirestore.instance.collection('Packages');
@@ -73,6 +77,13 @@ class FirestoreService {
   }
 
   // ? READ
+
+  // * read users
+  Stream<QuerySnapshot> getUsersStream() {
+    final usersStream = users.where('role', isEqualTo: 'user').snapshots();
+
+    return usersStream;
+  }
 
   // * read packages
   Stream<QuerySnapshot> getPackagesStream() {

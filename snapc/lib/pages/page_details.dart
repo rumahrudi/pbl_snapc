@@ -121,8 +121,6 @@ class _PageDetailsState extends State<PageDetails> {
               padding: const EdgeInsets.all(25),
               child: Column(
                 children: [
-                  // * price
-
                   // * button
                   MyButton(
                     isVisible: true,

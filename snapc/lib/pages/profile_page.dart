@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:snapc/components/my_app_bar.dart';
 import 'package:snapc/components/text_box.dart';
 import 'package:snapc/theme/colors.dart';
-// import 'package:snapc/theme/colors.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

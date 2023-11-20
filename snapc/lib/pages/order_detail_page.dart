@@ -76,6 +76,18 @@ class _OrderDetailsState extends State<OrderDetails> {
     }
   }
 
+  // * get add features
+
+  String _getAddFeature() {
+    if (widget.typePackage.toLowerCase() == 'basic') {
+      return 'Not Available';
+    } else if (widget.typePackage.toLowerCase() == 'standart') {
+      return 'Basic Photo Editing';
+    } else {
+      return 'Advanced Photo Editing';
+    }
+  }
+
   // * if status = payment
   bool shouldShowButton(List<String> allowedStatusList) {
     String lowerCaseStatus = widget.status.toLowerCase();
@@ -390,8 +402,8 @@ class _OrderDetailsState extends State<OrderDetails> {
                     const SizedBox(
                       height: 5,
                     ),
-                    const Text(
-                      'Basic photo editing',
+                    Text(
+                      _getAddFeature(),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -515,13 +527,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                         color: Colors.green),
 
                     MyTileButton(
-                        onTap: () {},
-                        isVisible: shouldShowButton(
-                            ['payment', 'editing', 'finish', 'photo session']),
-                        icon: Icons.support_agent,
-                        title: 'Need Support ?',
-                        subtitle: 'Chat with Us',
-                        onPressed: () {
+                        onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -529,6 +535,12 @@ class _OrderDetailsState extends State<OrderDetails> {
                             ),
                           );
                         },
+                        isVisible: shouldShowButton(
+                            ['payment', 'editing', 'finish', 'photo session']),
+                        icon: Icons.support_agent,
+                        title: 'Need Support ?',
+                        subtitle: 'Chat with Us',
+                        onPressed: () {},
                         textButton: 'Chat',
                         colorTile: Colors.red[100],
                         color: Colors.red),

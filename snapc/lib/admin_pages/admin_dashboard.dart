@@ -69,10 +69,10 @@ class _DasboardState extends State<Dasboard> {
                 onTap: () {},
                 icon: Icons.person,
                 title: 'U S E R S',
-                color: Colors.amber,
+                color: thirdColor,
               ),
               AdminCard(
-                color: Colors.pink,
+                color: thirdColor,
                 icon: Icons.message,
                 title: 'C H A T S',
                 onTap: () {
@@ -85,12 +85,13 @@ class _DasboardState extends State<Dasboard> {
                 },
               ),
               AdminCard(
-                  onTap: () {},
-                  icon: Icons.date_range,
-                  title: 'S C H E D U L E',
-                  color: Colors.blue),
+                onTap: () {},
+                icon: Icons.date_range,
+                title: 'S C H E D U L E',
+                color: thirdColor,
+              ),
               AdminCard(
-                color: Colors.purple,
+                color: thirdColor,
                 icon: Icons.image,
                 title: 'G A L L E R Y',
                 onTap: () {

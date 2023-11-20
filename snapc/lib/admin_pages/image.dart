@@ -15,7 +15,7 @@ class AddItem extends StatefulWidget {
 
 class _AddItemState extends State<AddItem> {
   final TextEditingController _controllerName = TextEditingController();
-  final TextEditingController _controllerQuantity = TextEditingController();
+  final TextEditingController _controllerType = TextEditingController();
 
   GlobalKey<FormState> key = GlobalKey();
 
@@ -83,12 +83,13 @@ class _AddItemState extends State<AddItem> {
       print("Form validation passed. Adding data to Firestore.");
 
       String itemName = _controllerName.text;
-      String itemQuantity = _controllerQuantity.text;
+      String itemType = _controllerType.text;
 
-      Map<String, String> dataToSend = {
+      Map<String, dynamic> dataToSend = {
         'name': itemName,
-        'quantity': itemQuantity,
+        'type': itemType,
         'image': imageUrl,
+        'timeStamp': Timestamp.now(),
       };
 
       try {
@@ -108,7 +109,7 @@ class _AddItemState extends State<AddItem> {
   void _resetForm() {
     setState(() {
       _controllerName.clear();
-      _controllerQuantity.clear();
+      _controllerType.clear();
       _pickedImage = null;
       imageUrl = '';
     });
@@ -119,11 +120,14 @@ class _AddItemState extends State<AddItem> {
     return Scaffold(
       appBar: const MyAppBar(text: 'Add Image Test'),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 25),
         child: Form(
           key: key,
           child: Column(
             children: [
+              SizedBox(
+                height: 25,
+              ),
               TextFormField(
                 controller: _controllerName,
                 decoration: const InputDecoration(
@@ -137,12 +141,12 @@ class _AddItemState extends State<AddItem> {
                 },
               ),
               TextFormField(
-                controller: _controllerQuantity,
+                controller: _controllerType,
                 decoration: const InputDecoration(
-                    hintText: 'Enter the quantity of the item'),
+                    hintText: 'Enter the type of the item'),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter the item quantity';
+                    return 'Please enter the item type';
                   }
 
                   return null;

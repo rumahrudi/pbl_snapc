@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:snapc/theme/colors.dart';
 
 class AdminCard extends StatelessWidget {
   final Color? color;
@@ -30,17 +31,17 @@ class AdminCard extends StatelessWidget {
               Icon(
                 icon,
                 size: 50,
-                color: Colors.white,
+                color: secondaryColor,
               ),
               const SizedBox(
                 height: 10,
               ),
               Text(
                 title,
-                style: const TextStyle(
+                style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
-                    color: Colors.white),
+                    color: secondaryColor),
               )
             ],
           ),
