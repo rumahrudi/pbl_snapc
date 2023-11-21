@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:snapc/theme/colors.dart';
 
 class OrderItem extends StatefulWidget {
+  final String email;
   final String docId;
   final String date;
   final String namePackage;
@@ -9,6 +10,7 @@ class OrderItem extends StatefulWidget {
   final String status;
   const OrderItem({
     super.key,
+    required this.email,
     required this.docId,
     required this.date,
     required this.namePackage,
@@ -78,6 +80,21 @@ class _OrderItemState extends State<OrderItem> {
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                'Order by',
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Text(
+                widget.email,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const Padding(
                 padding: EdgeInsets.only(

@@ -465,6 +465,10 @@ class _OrderDetailsState extends State<OrderDetails> {
                       isVisible: shouldShowButton(['payment']),
                       note: 'Please make Payment and upload your proof!',
                     ),
+                    MyNote(
+                        isVisible: shouldShowButton(['photo session']),
+                        note:
+                            'Please come to the photo studio according to your schedule'),
 
                     MyTileButton(
                         onTap: _pickImage,
@@ -525,6 +529,16 @@ class _OrderDetailsState extends State<OrderDetails> {
                         textButton: 'Visit',
                         colorTile: Colors.green[100],
                         color: Colors.green),
+                    MyTileButton(
+                        icon: Icons.map,
+                        title: 'Studio Location',
+                        subtitle: 'Visit our studio',
+                        onPressed: () {},
+                        onTap: () {},
+                        textButton: 'Go',
+                        colorTile: Colors.blue[100],
+                        color: Colors.blue,
+                        isVisible: shouldShowButton(['photo session'])),
 
                     MyTileButton(
                         onTap: () {

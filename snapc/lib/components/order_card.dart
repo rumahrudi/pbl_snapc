@@ -35,6 +35,7 @@ class _OrderCardState extends State<OrderCard> {
                 String docId = document.id;
                 Map<String, dynamic> data =
                     document.data() as Map<String, dynamic>;
+                String email = data['email'];
                 String name = data['typePackage'];
                 String date = data['date'];
                 String status = data['status'];
@@ -72,6 +73,7 @@ class _OrderCardState extends State<OrderCard> {
                       );
                     },
                     child: OrderItem(
+                      email: email,
                       docId: docId,
                       date: date,
                       namePackage: name,

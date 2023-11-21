@@ -112,6 +112,13 @@ class FirestoreService {
     return ordersStream;
   }
 
+  Stream<QuerySnapshot> getOrdersStatus(String? statusOrder) {
+    final ordersStatus =
+        orders.where('status', isEqualTo: statusOrder).snapshots();
+
+    return ordersStatus;
+  }
+
   // * read gallery
   Stream<QuerySnapshot> getGalleryStream() {
     final galleryStream =
