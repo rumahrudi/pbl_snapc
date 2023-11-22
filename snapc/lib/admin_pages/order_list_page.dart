@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:snapc/admin_pages/order_card.dart';
+import 'package:snapc/admin_pages/order_item_page.dart';
 import 'package:snapc/components/my_app_bar.dart';
-import 'package:snapc/components/order_item.dart';
 import 'package:snapc/database/firestore.dart';
-import 'package:snapc/pages/order_detail_page.dart';
 
 class OrderList extends StatefulWidget {
   final String status;
@@ -51,9 +51,9 @@ class _OrderListState extends State<OrderList> {
                     String status = data['status'];
                     String payment = data['paymentMethode'];
                     String total = data['total'];
-                    // String email = data['email'];
                     String revisions = data['revisions'];
                     String typePackage = data['typePackage'];
+                    String linkDrive = data['linkDrive'];
                     String fullName = data['fullName'];
                     String noWa = data['noWa'];
                     Timestamp timeStamp = data['timeStamp'];
@@ -62,34 +62,37 @@ class _OrderListState extends State<OrderList> {
                     DateTime orderDateTime = timeStamp.toDate();
 
                     return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => OrderDetails(
-                                docId: docId,
-                                fullName: fullName,
-                                noWa: noWa,
-                                status: status,
-                                date: date,
-                                payment: payment,
-                                revisions: revisions,
-                                total: total,
-                                typePackage: typePackage,
-                                orderOn: DateFormat('EEEE, MMMM d, y')
-                                    .format(orderDateTime),
-                              ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => OrderItemEdit(
+                              email: email,
+                              docId: docId,
+                              fullName: fullName,
+                              noWa: noWa,
+                              status: status,
+                              date: date,
+                              payment: payment,
+                              revisions: revisions,
+                              linkDrive: linkDrive,
+                              total: total,
+                              typePackage: typePackage,
+                              orderOn: DateFormat('EEEE, MMMM d, y')
+                                  .format(orderDateTime),
                             ),
-                          );
-                        },
-                        child: OrderItem(
-                          email: email,
-                          docId: docId,
-                          date: date,
-                          namePackage: name,
-                          price: total,
-                          status: status,
-                        ));
+                          ),
+                        );
+                      },
+                      child: OrderCardAdmin(
+                        email: email,
+                        docId: docId,
+                        date: date,
+                        namePackage: name,
+                        price: total,
+                        status: status,
+                      ),
+                    );
                   } else {
                     return const Center(
                       child: Padding(

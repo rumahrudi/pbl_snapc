@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:snapc/theme/colors.dart';
 
-class OrderItem extends StatefulWidget {
+class OrderCardAdmin extends StatefulWidget {
   final String email;
   final String docId;
   final String date;
   final String namePackage;
   final String price;
   final String status;
-  const OrderItem({
+  const OrderCardAdmin({
     super.key,
     required this.email,
     required this.docId,
@@ -19,10 +19,10 @@ class OrderItem extends StatefulWidget {
   });
 
   @override
-  State<OrderItem> createState() => _OrderItemState();
+  State<OrderCardAdmin> createState() => _OrderCardAdminState();
 }
 
-class _OrderItemState extends State<OrderItem> {
+class _OrderCardAdminState extends State<OrderCardAdmin> {
   // * get status color
   Color getStatusColor() {
     if (widget.status.toLowerCase() == 'payment') {
@@ -80,6 +80,21 @@ class _OrderItemState extends State<OrderItem> {
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                'Order by',
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Text(
+                widget.email,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const Padding(
                 padding: EdgeInsets.only(

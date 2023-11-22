@@ -153,6 +153,16 @@ class FirestoreService {
     });
   }
 
+  Future<void> updateScheduleAdmin(
+    String docId,
+    String date,
+  ) {
+    return orders.doc(docId).update({
+      'date': date,
+      'timeStamp': Timestamp.now(),
+    });
+  }
+
   // ? DELETE
 
   // ! delete cart given doc id
