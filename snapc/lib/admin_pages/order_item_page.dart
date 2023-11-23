@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:snapc/admin_pages/chat_admin.dart';
 import 'package:snapc/admin_pages/edit_box.dart';
 import 'package:snapc/components/date_field.dart';
 import 'package:snapc/components/list_tile_button.dart';
@@ -8,7 +9,6 @@ import 'package:snapc/components/my_app_bar.dart';
 import 'package:snapc/components/my_button.dart';
 import 'package:snapc/components/my_gap.dart';
 import 'package:snapc/database/firestore.dart';
-import 'package:snapc/pages/chat_page.dart';
 import 'package:snapc/theme/colors.dart';
 
 class OrderItemEdit extends StatefulWidget {
@@ -261,52 +261,60 @@ class _OrderItemEditState extends State<OrderItemEdit> {
 
     await showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: secondaryColor,
-        title: Text(
-          'Edit $field',
-          style: const TextStyle(
-            color: Colors.white,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) => AlertDialog(
+          backgroundColor: secondaryColor,
+          title: Text(
+            'Edit $field',
+            style: const TextStyle(
+              color: Colors.white,
+            ),
           ),
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: options.map((option) {
-            return RadioListTile(
-              title: Text(option),
-              value: option,
-              groupValue: selectedValue,
-              onChanged: (value) {
-                selectedValue = value as String;
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: options.map((option) {
+              return RadioListTile(
+                title: Text(
+                  option,
+                  style: const TextStyle(color: Colors.white),
+                ),
+                value: option,
+                groupValue: selectedValue,
+                activeColor: Colors.white,
+                onChanged: (value) {
+                  setState(() {
+                    selectedValue = value as String;
+                  });
+                },
+              );
+            }).toList(),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                isCancelled = true;
+                Navigator.pop(context);
               },
-            );
-          }).toList(),
+              child: const Text(
+                'Cancel',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(selectedValue);
+              },
+              child: const Text(
+                'Save',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            )
+          ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              isCancelled = true;
-              Navigator.pop(context);
-            },
-            child: const Text(
-              'Cancel',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(selectedValue);
-            },
-            child: const Text(
-              'Save',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          )
-        ],
       ),
     );
 
@@ -374,7 +382,7 @@ class _OrderItemEditState extends State<OrderItemEdit> {
                               width: 5,
                             ),
                             Text(
-                              ordersData['noWa'],
+                              '${'( ' + ordersData['noWa']} )',
                             )
                           ],
                         ),
@@ -537,7 +545,8 @@ class _OrderItemEditState extends State<OrderItemEdit> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ChatPage(),
+                                  builder: (context) =>
+                                      ChatAdmin(email: widget.email),
                                 ),
                               );
                             },

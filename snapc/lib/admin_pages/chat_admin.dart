@@ -3,12 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:snapc/components/my_app_bar.dart';
 
-class ChatPage extends StatefulWidget {
+class ChatAdmin extends StatefulWidget {
+  final String email;
+  const ChatAdmin({
+    super.key,
+    required this.email,
+  });
+
   @override
-  _ChatPageState createState() => _ChatPageState();
+  _ChatAdminState createState() => _ChatAdminState();
 }
 
-class _ChatPageState extends State<ChatPage> {
+class _ChatAdminState extends State<ChatAdmin> {
   late User currentUser;
 
   // * firestore
@@ -23,7 +29,7 @@ class _ChatPageState extends State<ChatPage> {
     currentUser = FirebaseAuth.instance.currentUser!;
     pengirim = currentUser.email.toString();
     //* dibawah ini akan di ubah menjadi widget.email dari halaman sebelumnya di admin dasboard
-    otherUserEmail = 'rudy@gmail.com';
+    otherUserEmail = widget.email;
   }
 
   @override
@@ -36,7 +42,8 @@ class _ChatPageState extends State<ChatPage> {
             child: StreamBuilder<QuerySnapshot>(
               stream: _firestore
                   .collection('messages')
-                  .where('sender', whereIn: [pengirim, otherUserEmail])
+                  .where('sender', isEqualTo: pengirim)
+                  .where('receiver', isEqualTo: otherUserEmail)
                   .orderBy('timestamp')
                   .snapshots(),
               builder: (context, snapshot) {
@@ -56,7 +63,12 @@ class _ChatPageState extends State<ChatPage> {
                     text: messageText,
                     isMe: pengirim == messageSender,
                   );
-                  messageWidgets.add(messageWidget);
+                  if ((pengirim == messageSender &&
+                          otherUserEmail == messageData['receiver']) ||
+                      (pengirim == messageData['receiver'] &&
+                          otherUserEmail == messageSender)) {
+                    messageWidgets.add(messageWidget);
+                  }
                 }
 
                 return ListView(
@@ -109,6 +121,7 @@ class _ChatPageState extends State<ChatPage> {
     _firestore.collection('messages').add({
       'text': text,
       'sender': pengirim,
+      'receiver': otherUserEmail,
       'timestamp': FieldValue.serverTimestamp(),
     });
   }
