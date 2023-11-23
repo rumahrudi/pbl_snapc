@@ -14,29 +14,11 @@ import 'package:snapc/theme/colors.dart';
 class OrderItemEdit extends StatefulWidget {
   final String email;
   final String docId;
-  final String status;
-  final String date;
-  final String fullName;
-  final String noWa;
-  final String payment;
-  final String typePackage;
-  final String linkDrive;
-  final String total;
-  final String revisions;
   final String orderOn;
   const OrderItemEdit({
     super.key,
     required this.email,
     required this.docId,
-    required this.status,
-    required this.date,
-    required this.fullName,
-    required this.noWa,
-    required this.payment,
-    required this.typePackage,
-    required this.linkDrive,
-    required this.total,
-    required this.revisions,
     required this.orderOn,
   });
 
@@ -55,12 +37,12 @@ class _OrderItemEditState extends State<OrderItemEdit> {
   GlobalKey<FormState> key = GlobalKey();
 
   // * colour status
-  Color getStatusColor() {
-    if (widget.status.toLowerCase() == 'payment') {
+  Color getStatusColor(String status) {
+    if (status.toLowerCase() == 'payment') {
       return Colors.red;
-    } else if (widget.status.toLowerCase() == 'finish') {
+    } else if (status.toLowerCase() == 'finish') {
       return Colors.green;
-    } else if (widget.status.toLowerCase() == 'photo session') {
+    } else if (status.toLowerCase() == 'photo session') {
       return Colors.purple;
     } else {
       //* Default color
@@ -70,8 +52,8 @@ class _OrderItemEditState extends State<OrderItemEdit> {
 
   // * payment methode status
 
-  String _getNorek() {
-    if (widget.payment.toLowerCase() == 'bni') {
+  String _getNorek(String payment) {
+    if (payment.toLowerCase() == 'bni') {
       return ' (4321234465)';
     } else {
       return ' (4321234564)';
@@ -80,10 +62,10 @@ class _OrderItemEditState extends State<OrderItemEdit> {
 
   // * get add features
 
-  String _getAddFeature() {
-    if (widget.typePackage.toLowerCase() == 'basic') {
+  String _getAddFeature(String typePackage) {
+    if (typePackage.toLowerCase() == 'basic') {
       return 'Not Available';
-    } else if (widget.typePackage.toLowerCase() == 'standart') {
+    } else if (typePackage.toLowerCase() == 'standart') {
       return 'Basic Photo Editing';
     } else {
       return 'Advanced Photo Editing';
@@ -192,7 +174,6 @@ class _OrderItemEditState extends State<OrderItemEdit> {
       'Successfully Update Order',
       () {
         Navigator.pop(context);
-        Navigator.pop(context);
       },
     );
   }
@@ -268,7 +249,6 @@ class _OrderItemEditState extends State<OrderItemEdit> {
       await userOrder.doc(widget.docId).update(
         {field: newValue},
       );
-      Navigator.pop(context);
     }
   }
 
@@ -341,336 +321,365 @@ class _OrderItemEditState extends State<OrderItemEdit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(text: 'D E T A I L S'),
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: ListView(
-                children: [
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '#${widget.docId}',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(widget.date),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  const Text('Booked By',
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        widget.fullName,
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        '(${widget.noWa})',
-                      )
-                    ],
-                  ),
+      appBar: const MyAppBar(text: 'D E T A I L S'),
+      body: StreamBuilder<DocumentSnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('Orders')
+            .doc(widget.docId)
+            .snapshots(),
+        builder: (context, snapshot) {
+          // * ger user data
+          if (snapshot.hasData) {
+            final ordersData = snapshot.data!.data() as Map<String, dynamic>;
 
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  const Text(
-                    'Order On',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    widget.orderOn,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 15,
-                    ),
-                    child: Divider(
-                      color: Colors.grey[600],
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // * type package
-                      Text(
-                        '${widget.typePackage} Package',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      // * total
-                      Text(
-                        'Rp ${widget.total}K',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
+            return Column(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    child: ListView(
+                      children: [
+                        const SizedBox(
+                          height: 25,
                         ),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  const Text(
-                    'Additional Features',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    _getAddFeature(),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Revisions',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '#${widget.docId}',
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
                         ),
-                      ),
-                      Text(
-                        widget.revisions,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
+                        const SizedBox(
+                          height: 5,
                         ),
-                      ),
-                    ],
-                  ),
+                        Text(ordersData['date']),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        const Text('Booked By',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              ordersData['fullName'],
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              ordersData['noWa'],
+                            )
+                          ],
+                        ),
 
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 15,
-                    ),
-                    child: Divider(
-                      color: Colors.grey[600],
-                    ),
-                  ),
-                  // * payment
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      //  * payment methode (Bank)
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Payment Methode',
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        const Text(
+                          'Order On',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          widget.orderOn,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 15,
+                          ),
+                          child: Divider(
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            // * type package
+                            Text(
+                              ordersData['typePackage'],
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            // * total
+                            Text(
+                              '${'Rp ' + ordersData['total']}K',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        const Text(
+                          'Additional Features',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          _getAddFeature(ordersData['typePackage']),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'Revisions',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              ordersData['revisions'],
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 15,
+                          ),
+                          child: Divider(
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                        // * payment
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            //  * payment methode (Bank)
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Payment Methode',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  ordersData['paymentMethode'] +
+                                      _getNorek(ordersData['paymentMethode']),
+                                ),
+                              ],
+                            ),
+
+                            // * status
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                border: Border.all(
+                                  color: getStatusColor(ordersData['status']),
+                                ),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(4),
+                                child: Text(
+                                  ordersData['status'],
+                                  style: TextStyle(
+                                    color: getStatusColor(ordersData['status']),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        const MyGap(
+                          height: 15,
+                          isVisible: true,
+                        ),
+                        MyTileButton(
+                            onTap: () {},
+                            isVisible: true,
+                            icon: Icons.photo_album,
+                            title: 'Show Proof Image',
+                            subtitle: 'Tap to show image',
+                            onPressed: () {},
+                            textButton: 'Show',
+                            colorTile: Colors.blue[100],
+                            color: Colors.blue),
+                        MyTileButton(
+                            onTap: () {},
+                            isVisible: true,
+                            icon: Icons.drive_file_move,
+                            title: 'User Photos',
+                            subtitle: 'Check user Photos',
+                            onPressed: () {},
+                            textButton: 'Visit',
+                            colorTile: Colors.green[100],
+                            color: Colors.green),
+
+                        MyTileButton(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ChatPage(),
+                                ),
+                              );
+                            },
+                            isVisible: true,
+                            icon: Icons.support_agent,
+                            title: 'Support ?',
+                            subtitle: 'Chat with User',
+                            onPressed: () {},
+                            textButton: 'Chat',
+                            colorTile: Colors.red[100],
+                            color: Colors.red),
+
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 15,
+                          ),
+                          child: Divider(
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 15),
+                          child: Text(
+                            'Change Status',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            widget.payment + _getNorek(),
-                          ),
-                        ],
-                      ),
-
-                      // * status
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          border: Border.all(
-                            color: getStatusColor(),
-                          ),
-                          borderRadius: BorderRadius.circular(4),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(4),
+                        EditBox(
+                          sectionName: 'Status',
+                          text: ordersData['status'],
+                          onPressed: () {
+                            editRadioField('status', ordersData['status'], [
+                              'Payment',
+                              'Confirmation',
+                              'Schedule',
+                              'Photo session',
+                              'Editing',
+                              'Finish',
+                            ]);
+                          },
+                        ),
+
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 15),
                           child: Text(
-                            widget.status,
-                            style: TextStyle(
-                              color: getStatusColor(),
-                              fontWeight: FontWeight.bold,
-                            ),
+                            'Rename',
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
 
-                  const MyGap(
-                    height: 15,
-                    isVisible: true,
-                  ),
-                  MyTileButton(
-                      onTap: () {},
-                      isVisible: true,
-                      icon: Icons.photo_album,
-                      title: 'Show Proof Image',
-                      subtitle: 'Tap to show image',
-                      onPressed: () {},
-                      textButton: 'Show',
-                      colorTile: Colors.blue[100],
-                      color: Colors.blue),
-                  MyTileButton(
-                      onTap: () {},
-                      isVisible: true,
-                      icon: Icons.drive_file_move,
-                      title: 'User Photos',
-                      subtitle: 'Check user Photos',
-                      onPressed: () {},
-                      textButton: 'Visit',
-                      colorTile: Colors.green[100],
-                      color: Colors.green),
-
-                  MyTileButton(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ChatPage(),
+                        EditBox(
+                          sectionName: 'Name',
+                          text: ordersData['fullName'],
+                          onPressed: () =>
+                              editField('fullName', ordersData['fullName']),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 15),
+                          child: Text(
+                            'Edit No.Wa',
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                        );
-                      },
-                      isVisible: true,
-                      icon: Icons.support_agent,
-                      title: 'Support ?',
-                      subtitle: 'Chat with User',
-                      onPressed: () {},
-                      textButton: 'Chat',
-                      colorTile: Colors.red[100],
-                      color: Colors.red),
+                        ),
+                        EditBox(
+                          sectionName: 'No Wa',
+                          text: ordersData['noWa'],
+                          onPressed: () =>
+                              editField('noWa', ordersData['noWa']),
+                        ),
 
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 15,
-                    ),
-                    child: Divider(
-                      color: Colors.grey[600],
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                    child: Text(
-                      'Change Status',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  EditBox(
-                    sectionName: 'Status',
-                    text: widget.status,
-                    onPressed: () {
-                      editRadioField('status', widget.status, [
-                        'Payment',
-                        'Confirmation',
-                        'Schedule',
-                        'Photo session',
-                        'Editing',
-                        'Finish',
-                      ]);
-                    },
-                  ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 15),
+                          child: Text(
+                            'Edit Revision Left',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
 
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                    child: Text(
-                      'Rename',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                        EditBox(
+                          sectionName: 'Revision',
+                          text: ordersData['revisions'],
+                          onPressed: () =>
+                              editField('revisions', ordersData['revisions']),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 15),
+                          child: Text(
+                            'Edit Link Drive',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        EditBox(
+                          sectionName: 'Link Drive',
+                          text: ordersData['linkDrive'],
+                          onPressed: () =>
+                              editField('linkDrive', ordersData['linkDrive']),
+                        ),
 
-                  EditBox(
-                    sectionName: 'Name',
-                    text: widget.fullName,
-                    onPressed: () => editField('fullName', widget.fullName),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                    child: Text(
-                      'Edit No.Wa',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  EditBox(
-                    sectionName: 'No Wa',
-                    text: widget.noWa,
-                    onPressed: () => editField('noWa', widget.noWa),
-                  ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 15),
+                          child: Text(
+                            'Reschedule',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
 
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                    child: Text(
-                      'Edit Revision Left',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                        DateField(
+                          isVisible: true,
+                          onTap: _showDatePicker,
+                          hintText:
+                              DateFormat('EEEE, MMMM d, y').format(_dateTime),
+                        ),
+                        const MyGap(
+                          height: 15,
+                          isVisible: true,
+                        ),
+                        // * shedule button
+                        MyButton(
+                          text: 'Reschedule',
+                          onTap: _submitForm,
+                          isVisible: true,
+                        ),
+
+                        const SizedBox(
+                          height: 25,
+                        ),
+                      ],
                     ),
                   ),
+                ),
+              ],
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text('Eror${snapshot.error}'),
+            );
+          }
 
-                  EditBox(
-                    sectionName: 'Revision',
-                    text: widget.revisions,
-                    onPressed: () => editField('revisions', widget.revisions),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                    child: Text(
-                      'Edit Link Drive',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  EditBox(
-                    sectionName: 'Link Drive',
-                    text: widget.linkDrive,
-                    onPressed: () => editField('linkDrive', widget.linkDrive),
-                  ),
-
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                    child: Text(
-                      'Reschedule',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-
-                  DateField(
-                    isVisible: true,
-                    onTap: _showDatePicker,
-                    hintText: DateFormat('EEEE, MMMM d, y').format(_dateTime),
-                  ),
-                  const MyGap(
-                    height: 15,
-                    isVisible: true,
-                  ),
-                  // * shedule button
-                  MyButton(
-                    text: 'Reschedule',
-                    onTap: _submitForm,
-                    isVisible: true,
-                  ),
-
-                  const SizedBox(
-                    height: 25,
-                  ),
-                ],
-              ),
-            ),
-          )
-        ],
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
       ),
     );
   }

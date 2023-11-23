@@ -125,7 +125,7 @@ class _AddItemState extends State<AddItem> {
           key: key,
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 25,
               ),
               TextFormField(

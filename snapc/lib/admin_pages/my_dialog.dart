@@ -6,7 +6,7 @@ class MyDialog extends StatefulWidget {
   final String initialValue;
   final List<String> options;
 
-  MyDialog(
+  const MyDialog(
       {required this.field, required this.initialValue, required this.options});
 
   @override

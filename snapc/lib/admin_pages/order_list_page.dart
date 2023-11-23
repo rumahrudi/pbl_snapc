@@ -49,13 +49,7 @@ class _OrderListState extends State<OrderList> {
                     String name = data['typePackage'];
                     String date = data['date'];
                     String status = data['status'];
-                    String payment = data['paymentMethode'];
                     String total = data['total'];
-                    String revisions = data['revisions'];
-                    String typePackage = data['typePackage'];
-                    String linkDrive = data['linkDrive'];
-                    String fullName = data['fullName'];
-                    String noWa = data['noWa'];
                     Timestamp timeStamp = data['timeStamp'];
 
                     // * covert timeStamp to dateTime
@@ -69,15 +63,6 @@ class _OrderListState extends State<OrderList> {
                             builder: (context) => OrderItemEdit(
                               email: email,
                               docId: docId,
-                              fullName: fullName,
-                              noWa: noWa,
-                              status: status,
-                              date: date,
-                              payment: payment,
-                              revisions: revisions,
-                              linkDrive: linkDrive,
-                              total: total,
-                              typePackage: typePackage,
                               orderOn: DateFormat('EEEE, MMMM d, y')
                                   .format(orderDateTime),
                             ),
