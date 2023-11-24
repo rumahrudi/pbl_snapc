@@ -330,7 +330,7 @@ class _OrderItemEditState extends State<OrderItemEdit> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: const MyAppBar(text: 'D E T A I L S'),
+      appBar: const MyAppBar(text: 'DETAILS'),
       body: StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance
             .collection('Orders')

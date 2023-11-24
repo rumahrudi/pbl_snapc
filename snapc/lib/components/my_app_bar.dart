@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:snapc/theme/colors.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String text;
@@ -14,7 +13,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: secondaryColor,
+      backgroundColor: Colors.transparent,
       elevation: 0,
       leading: IconButton(
         icon: const Icon(Icons.arrow_back),
@@ -22,21 +21,20 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           Navigator.pop(context);
         },
       ),
-      actions: [
+      actions: const [
         IconButton(
           onPressed: null,
           icon: Icon(
             Icons.shopping_bag_rounded,
-            color: secondaryColor,
+            color: Colors.transparent,
           ),
         )
       ],
-      iconTheme: const IconThemeData(color: Colors.white),
+      // iconTheme: const IconThemeData(color: Colors.black),
       title: Center(
         child: Text(
           text,
-          style:
-              const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
     );

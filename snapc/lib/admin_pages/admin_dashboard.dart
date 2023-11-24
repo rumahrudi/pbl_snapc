@@ -59,6 +59,7 @@ class _DasboardState extends State<Dasboard> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           elevation: 0,
+          backgroundColor: Colors.transparent,
           leading: IconButton(
             icon: const Icon(
               Icons.logout,
@@ -67,21 +68,20 @@ class _DasboardState extends State<Dasboard> {
               signOut(context);
             },
           ),
-          actions: [
+          actions: const [
             IconButton(
               onPressed: null,
               icon: Icon(
                 Icons.shopping_bag_rounded,
-                color: secondaryColor,
+                color: Colors.transparent,
               ),
             )
           ],
-          iconTheme: const IconThemeData(color: Colors.white),
+          // iconTheme: const IconThemeData(color: Colors.white),
           title: const Center(
             child: Text(
-              'A D M I N',
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              'DASHBOARD',
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
         ),

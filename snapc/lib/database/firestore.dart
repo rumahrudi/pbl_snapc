@@ -153,6 +153,7 @@ class FirestoreService {
     });
   }
 
+  // * update schedule for admin
   Future<void> updateScheduleAdmin(
     String docId,
     String date,

@@ -12,8 +12,8 @@ import 'package:snapc/components/my_button.dart';
 import 'package:snapc/components/my_gap.dart';
 import 'package:snapc/components/my_note.dart';
 import 'package:snapc/database/firestore.dart';
-import 'package:snapc/pages/chat_page.dart';
 import 'package:snapc/theme/colors.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class OrderDetails extends StatefulWidget {
   final String docId;
@@ -51,6 +51,17 @@ class _OrderDetailsState extends State<OrderDetails> {
 
   // * global key
   GlobalKey<FormState> key = GlobalKey();
+
+  // * open wa apps
+  void openWhatsApp(String phoneNumber, String message) async {
+    final url =
+        'https://wa.me/$phoneNumber?text=${Uri.encodeComponent(message)}';
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   // * colour status
   Color getStatusColor() {
@@ -519,7 +530,10 @@ class _OrderDetailsState extends State<OrderDetails> {
                       ),
                     ),
                     MyTileButton(
-                        onTap: () {},
+                        onTap: () {
+                          launchUrlString(
+                              'https://drive.google.com/drive/folders/1hoZD_pxhRzgETAJjfKfmp8q-uxZmUUzF?usp=sharing');
+                        },
                         isVisible: shouldShowButton(
                             ['editing', 'finish', 'photo session']),
                         icon: Icons.drive_file_move,
@@ -534,7 +548,10 @@ class _OrderDetailsState extends State<OrderDetails> {
                         title: 'Studio Location',
                         subtitle: 'Visit our studio',
                         onPressed: () {},
-                        onTap: () {},
+                        onTap: () {
+                          launchUrlString(
+                              'https://maps.app.goo.gl/m6cArC3ikRatjVvY8');
+                        },
                         textButton: 'Go',
                         colorTile: Colors.blue[100],
                         color: Colors.blue,
@@ -542,15 +559,23 @@ class _OrderDetailsState extends State<OrderDetails> {
 
                     MyTileButton(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ChatPage(),
-                            ),
-                          );
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => ChatPage(),
+                          //   ),
+                          // );
+
+                          openWhatsApp('+6281364300283',
+                              '*Kode pesanan:* ${widget.docId}\n*Name:* ${widget.fullName}\n*Package:* ${widget.typePackage}\n*Status:* ${widget.status}');
                         },
-                        isVisible: shouldShowButton(
-                            ['payment', 'editing', 'finish', 'photo session']),
+                        isVisible: shouldShowButton([
+                          'payment',
+                          'schedule',
+                          'editing',
+                          'finish',
+                          'photo session'
+                        ]),
                         icon: Icons.support_agent,
                         title: 'Need Support ?',
                         subtitle: 'Chat with Us',
