@@ -115,8 +115,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
     await firestoreService.deleteCart(widget.docId);
 
     _showAlertDialog(
-      'Successfully Add Order',
-      'Booking berhasil ditambahkan',
+      'Successfully Order',
+      'Check your order',
       () {
         Navigator.pop(context);
         _navigatePage();
@@ -143,7 +143,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   // * show package choosed from cart
                   Container(
                     decoration: BoxDecoration(
-                      color: thirdColor,
+                      color: Colors.grey[200],
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: ListTile(
@@ -178,7 +178,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   ),
                   MyTextField(
                     controller: phoneController,
-                    hintText: 'No WhatsApp',
+                    hintText: 'No WhatsApp (+628xxx)',
                     obsecureText: false,
                     readOnly: false,
                   ),
@@ -200,7 +200,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   // * Option 1
                   Container(
                     decoration: BoxDecoration(
-                      color: thirdColor,
+                      color: Colors.grey[200],
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: RadioListTile(
@@ -226,7 +226,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   // * Option 2
                   Container(
                     decoration: BoxDecoration(
-                      color: thirdColor,
+                      color: Colors.grey[200],
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: RadioListTile(

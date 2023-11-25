@@ -113,8 +113,10 @@ class FirestoreService {
   }
 
   Stream<QuerySnapshot> getOrdersStatus(String? statusOrder) {
-    final ordersStatus =
-        orders.where('status', isEqualTo: statusOrder).snapshots();
+    final ordersStatus = orders
+        .where('status', isEqualTo: statusOrder)
+        .orderBy('timeStamp', descending: true)
+        .snapshots();
 
     return ordersStatus;
   }

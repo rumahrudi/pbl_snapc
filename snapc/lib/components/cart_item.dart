@@ -43,7 +43,7 @@ class _CartItemState extends State<CartItem> {
           ),
         ),
         content: const Text(
-          'Check yout cart',
+          'Check your cart',
           style: TextStyle(color: Colors.white),
           textAlign: TextAlign.center,
         ),
@@ -61,7 +61,7 @@ class _CartItemState extends State<CartItem> {
       margin: const EdgeInsets.only(bottom: 8),
       child: Container(
         decoration: BoxDecoration(
-          color: thirdColor,
+          color: Colors.grey[200],
           borderRadius: BorderRadius.circular(12),
         ),
         child: ListTile(

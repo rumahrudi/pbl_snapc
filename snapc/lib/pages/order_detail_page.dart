@@ -296,7 +296,7 @@ class _OrderDetailsState extends State<OrderDetails> {
         return false;
       },
       child: Scaffold(
-        appBar: const MyAppBar(text: 'D E T A I L S'),
+        appBar: const MyAppBar(text: 'Order Details'),
         backgroundColor: Colors.white,
         body: Column(
           children: [
@@ -474,12 +474,13 @@ class _OrderDetailsState extends State<OrderDetails> {
                     // * note payment
                     MyNote(
                       isVisible: shouldShowButton(['payment']),
-                      note: 'Please make Payment and upload your proof!',
+                      note:
+                          'Please make Payment according to the selected payment method and upload your proof!',
                     ),
                     MyNote(
                         isVisible: shouldShowButton(['photo session']),
                         note:
-                            'Please come to the photo studio according to your schedule'),
+                            'Please come to the photo studio according to your schedule on ${widget.date}'),
 
                     MyTileButton(
                         onTap: _pickImage,

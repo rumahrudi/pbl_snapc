@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:snapc/components/package_card.dart';
-import 'package:snapc/theme/colors.dart';
 
 class ShopPage extends StatefulWidget {
   const ShopPage({super.key});
@@ -19,13 +18,13 @@ class _ShopPageState extends State<ShopPage> {
           padding: const EdgeInsets.all(12),
           margin: const EdgeInsets.symmetric(horizontal: 25),
           decoration: BoxDecoration(
-            color: thirdColor,
+            color: Colors.grey[200],
             borderRadius: BorderRadius.circular(8),
           ),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Welcome Back',
                 style: TextStyle(
                   color: Colors.black,
@@ -34,7 +33,7 @@ class _ShopPageState extends State<ShopPage> {
               ),
               Icon(
                 Icons.home_filled,
-                color: Colors.grey,
+                color: Colors.grey[400],
               ),
             ],
           ),
@@ -87,7 +86,7 @@ class _ShopPageState extends State<ShopPage> {
             right: 25,
           ),
           child: Divider(
-            color: thirdColor,
+            color: Colors.grey[200],
           ),
         )
       ],

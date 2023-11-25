@@ -43,7 +43,7 @@ class _OrderItemState extends State<OrderItem> {
       padding: const EdgeInsets.only(top: 25),
       child: Container(
         decoration: BoxDecoration(
-          color: thirdColor,
+          color: Colors.grey[200],
           borderRadius: BorderRadius.circular(12),
         ),
         child: Padding(

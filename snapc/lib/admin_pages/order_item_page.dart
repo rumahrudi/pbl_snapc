@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:snapc/admin_pages/chat_admin.dart';
 import 'package:snapc/admin_pages/edit_box.dart';
 import 'package:snapc/components/date_field.dart';
 import 'package:snapc/components/list_tile_button.dart';
@@ -10,6 +9,7 @@ import 'package:snapc/components/my_button.dart';
 import 'package:snapc/components/my_gap.dart';
 import 'package:snapc/database/firestore.dart';
 import 'package:snapc/theme/colors.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class OrderItemEdit extends StatefulWidget {
   final String email;
@@ -35,6 +35,17 @@ class _OrderItemEditState extends State<OrderItemEdit> {
 
   // * global key
   GlobalKey<FormState> key = GlobalKey();
+
+  // * open whatsapp
+  void openWhatsApp(String phoneNumber, String message) async {
+    final url =
+        'https://wa.me/$phoneNumber?text=${Uri.encodeComponent(message)}';
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   // * colour status
   Color getStatusColor(String status) {
@@ -528,7 +539,10 @@ class _OrderItemEditState extends State<OrderItemEdit> {
                             colorTile: Colors.blue[100],
                             color: Colors.blue),
                         MyTileButton(
-                            onTap: () {},
+                            onTap: () {
+                              launchUrlString(
+                                  'https://drive.google.com/drive/folders/1hoZD_pxhRzgETAJjfKfmp8q-uxZmUUzF?usp=sharing');
+                            },
                             isVisible: true,
                             icon: Icons.drive_file_move,
                             title: 'User Photos',
@@ -540,13 +554,8 @@ class _OrderItemEditState extends State<OrderItemEdit> {
 
                         MyTileButton(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      ChatAdmin(email: widget.email),
-                                ),
-                              );
+                              openWhatsApp(ordersData['noWa'],
+                                  '*Kode pesanan:* ${widget.docId}\n*Name:* ${ordersData['fullName']}\n*Package:* ${ordersData['typePackage']}\n*Status:* ${ordersData['status']}');
                             },
                             isVisible: true,
                             icon: Icons.support_agent,

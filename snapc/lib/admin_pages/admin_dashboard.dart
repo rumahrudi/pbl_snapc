@@ -92,10 +92,10 @@ class _DasboardState extends State<Dasboard> {
                 onTap: () {},
                 linkImage: 'lib/images/schedule.png',
                 title: 'S C H E D U L E',
-                color: thirdColor,
+                color: Colors.grey[200],
               ),
               AdminCard(
-                color: thirdColor,
+                color: Colors.grey[200],
                 linkImage: 'lib/images/order.png',
                 title: 'O R D E R S',
                 onTap: () {

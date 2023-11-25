@@ -98,7 +98,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   // * profile picture
                   const SizedBox(
-                    height: 50,
+                    height: 25,
                   ),
                   Icon(
                     Icons.person,

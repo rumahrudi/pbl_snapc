@@ -16,7 +16,7 @@ class EditBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: thirdColor,
+        color: Colors.grey[200],
         borderRadius: BorderRadius.circular(8),
       ),
       padding: const EdgeInsets.only(

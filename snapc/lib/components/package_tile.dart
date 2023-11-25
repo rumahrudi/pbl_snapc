@@ -17,13 +17,11 @@ class PackageTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(
-        left: 25,
-      ),
+      margin: const EdgeInsets.only(left: 25),
       // padding: EdgeInsets.all(20),
       width: 250,
       decoration: BoxDecoration(
-        color: thirdColor,
+        color: Colors.grey[200],
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
