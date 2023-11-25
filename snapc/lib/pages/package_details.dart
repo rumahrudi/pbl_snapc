@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:snapc/components/my_app_bar.dart';
 import 'package:snapc/components/my_button.dart';
 import 'package:snapc/database/firestore.dart';
+import 'package:snapc/pages/checkout_page.dart';
 import 'package:snapc/theme/colors.dart';
 
 class PackagesDetails extends StatefulWidget {
@@ -34,6 +35,28 @@ class _PackagesDetailsState extends State<PackagesDetails> {
   // * firestore
   final FirestoreService firestoreService = FirestoreService();
 
+  // * navigate to chekout page
+  void navigateToCheckoutPage(
+    String name,
+    String imagePath,
+    String price,
+    String docId,
+    String revisions,
+  ) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CheckoutPage(
+          name: name,
+          imagePath: imagePath,
+          price: price,
+          docId: docId,
+          revisions: revisions,
+        ),
+      ),
+    );
+  }
+
   void allertAddToCart() {
     // ! Allert succesfully add to cart
     showDialog(
@@ -59,7 +82,7 @@ class _PackagesDetailsState extends State<PackagesDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: const MyAppBar(text: 'D E T A I L S'),
+      appBar: const MyAppBar(text: 'Package Details'),
       body: Column(
         children: [
           Expanded(

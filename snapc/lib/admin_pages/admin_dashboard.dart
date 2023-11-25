@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:snapc/admin_pages/admin_orders_page.dart';
-import 'package:snapc/admin_pages/upload_ref.dart';
-import 'package:snapc/admin_pages/user_list_page.dart';
 import 'package:snapc/auth/auth.dart';
 import 'package:snapc/components/admin_card.dart';
 import 'package:snapc/database/firestore.dart';
@@ -80,7 +78,7 @@ class _DasboardState extends State<Dasboard> {
           // iconTheme: const IconThemeData(color: Colors.white),
           title: const Center(
             child: Text(
-              'DASHBOARD',
+              'Admin Dashboard',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
@@ -88,43 +86,17 @@ class _DasboardState extends State<Dasboard> {
         body: Padding(
           padding: const EdgeInsets.all(25),
           child: GridView.count(
-            crossAxisCount: 2,
+            crossAxisCount: 1,
             children: [
               AdminCard(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const UserList(),
-                    ),
-                  );
-                },
-                icon: Icons.person,
-                title: 'U S E R S',
-                color: thirdColor,
-              ),
-              AdminCard(
-                color: thirdColor,
-                icon: Icons.message,
-                title: 'C H A T S',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const MyUpload(),
-                    ),
-                  );
-                },
-              ),
-              AdminCard(
                 onTap: () {},
-                icon: Icons.date_range,
+                linkImage: 'lib/images/schedule.png',
                 title: 'S C H E D U L E',
                 color: thirdColor,
               ),
               AdminCard(
                 color: thirdColor,
-                icon: Icons.shopping_bag,
+                linkImage: 'lib/images/order.png',
                 title: 'O R D E R S',
                 onTap: () {
                   Navigator.push(

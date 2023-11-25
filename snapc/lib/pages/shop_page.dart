@@ -33,7 +33,7 @@ class _ShopPageState extends State<ShopPage> {
                 ),
               ),
               Icon(
-                Icons.home,
+                Icons.home_filled,
                 color: Colors.grey,
               ),
             ],

@@ -53,9 +53,9 @@ class _MyUploadState extends State<MyUpload> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.white,
       appBar: const MyAppBar(
-        text: 'Dashboard',
+        text: 'Add Gallery',
       ),
       body: Scaffold(
         body: Center(

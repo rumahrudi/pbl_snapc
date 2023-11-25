@@ -15,7 +15,7 @@ class _AdminOrderState extends State<AdminOrder> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(text: 'ORDERS'),
+      appBar: const MyAppBar(text: 'Orders'),
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(

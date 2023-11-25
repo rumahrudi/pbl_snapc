@@ -170,4 +170,9 @@ class FirestoreService {
   Future<void> deleteCart(String docId) {
     return cart.doc(docId).delete();
   }
+
+  // ! delete order given doc id
+  Future<void> deleteOrder(String docId) {
+    return orders.doc(docId).delete();
+  }
 }

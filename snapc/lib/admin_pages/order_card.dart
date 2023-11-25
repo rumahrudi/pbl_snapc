@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:snapc/database/firestore.dart';
 import 'package:snapc/theme/colors.dart';
 
 class OrderCardAdmin extends StatefulWidget {
@@ -22,6 +23,9 @@ class OrderCardAdmin extends StatefulWidget {
   State<OrderCardAdmin> createState() => _OrderCardAdminState();
 }
 
+// * firestore
+final FirestoreService firestoreService = FirestoreService();
+
 class _OrderCardAdminState extends State<OrderCardAdmin> {
   // * get status color
   Color getStatusColor() {
@@ -35,6 +39,49 @@ class _OrderCardAdminState extends State<OrderCardAdmin> {
       //* Default color
       return secondaryColor;
     }
+  }
+
+  // ! delete order
+  void showDeleteConfirmationDialog(BuildContext context, String docId) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            "Delete Order",
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: secondaryColor,
+          content: const Text(
+            "Are you sure to delete this order?",
+            style: TextStyle(color: Colors.white),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(
+                    context); // Tutup dialog jika tombol "Batal" ditekan
+              },
+              child: const Text(
+                "Cancel",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                firestoreService.deleteOrder(docId);
+                Navigator.pop(context);
+              },
+              child: const Text(
+                "OK",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -51,11 +98,25 @@ class _OrderCardAdminState extends State<OrderCardAdmin> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                '#${widget.docId}',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '#${widget.docId}',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      showDeleteConfirmationDialog(context, widget.docId);
+                    },
+                    icon: Icon(
+                      Icons.delete,
+                      color: Colors.red[500],
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 5,

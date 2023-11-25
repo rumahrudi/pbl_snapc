@@ -60,8 +60,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        backgroundColor:
-            secondaryColor, // Sesuaikan warna latar belakang sesuai keinginan
+        backgroundColor: secondaryColor,
         title: Center(
           child: Text(
             title,
@@ -129,7 +128,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: const MyAppBar(text: 'C H E C K O U T'),
+      appBar: const MyAppBar(text: 'Checkout'),
       body: Column(
         children: [
           Expanded(

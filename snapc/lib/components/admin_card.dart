@@ -3,13 +3,13 @@ import 'package:snapc/theme/colors.dart';
 
 class AdminCard extends StatelessWidget {
   final Color? color;
-  final IconData? icon;
+  final String linkImage;
   final String title;
   final Function()? onTap;
   const AdminCard({
     super.key,
     required this.color,
-    required this.icon,
+    required this.linkImage,
     required this.title,
     required this.onTap,
   });
@@ -28,10 +28,9 @@ class AdminCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                icon,
-                size: 50,
-                color: secondaryColor,
+              Image.asset(
+                linkImage,
+                width: 150,
               ),
               const SizedBox(
                 height: 10,
@@ -40,7 +39,7 @@ class AdminCard extends StatelessWidget {
                 title,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 14,
+                    fontSize: 25, //* 14 if one row 2 card
                     color: secondaryColor),
               )
             ],

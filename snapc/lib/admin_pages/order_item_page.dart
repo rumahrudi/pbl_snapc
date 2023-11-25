@@ -330,7 +330,7 @@ class _OrderItemEditState extends State<OrderItemEdit> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: const MyAppBar(text: 'DETAILS'),
+      appBar: const MyAppBar(text: 'Order Details'),
       body: StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance
             .collection('Orders')
@@ -348,11 +348,9 @@ class _OrderItemEditState extends State<OrderItemEdit> {
                     padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: ListView(
                       children: [
-                        const SizedBox(
-                          height: 25,
-                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
                               '#${widget.docId}',
@@ -683,6 +681,9 @@ class _OrderItemEditState extends State<OrderItemEdit> {
             return Center(
               child: Text('Eror${snapshot.error}'),
             );
+          } else if (!snapshot.hasData || snapshot.data == null) {
+            // Tampilkan pesan atau widget lain jika data tidak tersedia
+            return const Center(child: Text('Order not available'));
           }
 
           return const Center(

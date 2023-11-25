@@ -27,7 +27,7 @@ class _OrderListState extends State<OrderList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(text: widget.status.toUpperCase()),
+      appBar: MyAppBar(text: widget.status),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25),
         child: StreamBuilder<QuerySnapshot>(
