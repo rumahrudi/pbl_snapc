@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:snapc/admin_pages/admin_orders_page.dart';
+import 'package:snapc/admin_pages/schedule_page.dart';
 import 'package:snapc/auth/auth.dart';
 import 'package:snapc/components/admin_card.dart';
 import 'package:snapc/database/firestore.dart';
@@ -89,7 +90,14 @@ class _DasboardState extends State<Dasboard> {
             crossAxisCount: 1,
             children: [
               AdminCard(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ShcedulePage(),
+                    ),
+                  );
+                },
                 linkImage: 'lib/images/schedule.png',
                 title: 'S C H E D U L E',
                 color: Colors.grey[200],

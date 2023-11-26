@@ -102,7 +102,7 @@ class FirestoreService {
     return cartStream;
   }
 
-  // * read orders
+  // * read orders by email user
   Stream<QuerySnapshot> getOrdersStream(String? currentUser) {
     final ordersStream = orders
         .where('email', isEqualTo: currentUser)
@@ -112,6 +112,7 @@ class FirestoreService {
     return ordersStream;
   }
 
+  // * read orders by status
   Stream<QuerySnapshot> getOrdersStatus(String? statusOrder) {
     final ordersStatus = orders
         .where('status', isEqualTo: statusOrder)
@@ -119,6 +120,16 @@ class FirestoreService {
         .snapshots();
 
     return ordersStatus;
+  }
+
+  // * read orders by date
+  Stream<QuerySnapshot> getOrdersSchedule(String? date) {
+    final ordersSchedule = orders
+        .where('date', isEqualTo: date)
+        .orderBy('timeStamp', descending: true)
+        .snapshots();
+
+    return ordersSchedule;
   }
 
   // * read gallery

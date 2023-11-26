@@ -161,7 +161,7 @@ class _PackagesDetailsState extends State<PackagesDetails> {
           // * price and buttton
           Container(
             decoration: BoxDecoration(
-              color: thirdColor,
+              color: Colors.grey[200],
             ),
             child: Padding(
               padding: const EdgeInsets.all(25),

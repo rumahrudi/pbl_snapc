@@ -686,6 +686,11 @@ class _OrderItemEditState extends State<OrderItemEdit> {
                 ),
               ],
             );
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            // * Menampilkan Circular Progress Indicator saat mengambil data
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           } else if (snapshot.hasError) {
             return Center(
               child: Text('Eror${snapshot.error}'),

@@ -87,7 +87,7 @@ class _OrderCardAdminState extends State<OrderCardAdmin> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 25),
+      padding: const EdgeInsets.only(top: 15),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.grey[200],
