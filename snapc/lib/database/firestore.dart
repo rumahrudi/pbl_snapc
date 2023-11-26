@@ -21,6 +21,10 @@ class FirestoreService {
   final CollectionReference gallery =
       FirebaseFirestore.instance.collection('Gallery');
 
+  // * get collection of images
+  final CollectionReference images =
+      FirebaseFirestore.instance.collection('Images');
+
   // ? CREATE
 
   // * add to cart
@@ -133,9 +137,11 @@ class FirestoreService {
   }
 
   // * read gallery
-  Stream<QuerySnapshot> getGalleryStream() {
-    final galleryStream =
-        gallery.orderBy('timeStamp', descending: true).snapshots();
+  Stream<QuerySnapshot> getGalleryStream(String? type) {
+    final galleryStream = gallery
+        .where('type', isEqualTo: type)
+        // .orderBy('timeStamp', descending: true)
+        .snapshots();
 
     return galleryStream;
   }

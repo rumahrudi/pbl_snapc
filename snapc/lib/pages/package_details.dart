@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:snapc/components/my_app_bar.dart';
 import 'package:snapc/components/my_button.dart';
+import 'package:snapc/components/package_gallery.dart';
 import 'package:snapc/database/firestore.dart';
 import 'package:snapc/theme/colors.dart';
 
@@ -63,99 +64,110 @@ class _PackagesDetailsState extends State<PackagesDetails> {
       body: Column(
         children: [
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: ListView(
-                children: [
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  Image.asset(
-                    widget.imagePath,
-                    height: 150,
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-
-                  // * food name
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: ListView(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: Column(
                     children: [
-                      Text(
-                        '${widget.name} Package',
-                        style: GoogleFonts.dmSerifDisplay(fontSize: 18),
+                      const SizedBox(
+                        height: 25,
                       ),
-                      Text(
-                        'Rp ${widget.price}K',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: secondaryColor),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  // * rating
-                  Row(
-                    children: [
-                      // * star icon
-                      Icon(
-                        Icons.star,
-                        color: Colors.yellow[800],
+                      Image.asset(
+                        widget.imagePath,
+                        height: 150,
                       ),
                       const SizedBox(
-                        width: 5,
+                        height: 25,
                       ),
-                      // * number
+
+                      // * food name
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '${widget.name} Package',
+                            style: GoogleFonts.dmSerifDisplay(fontSize: 18),
+                          ),
+                          Text(
+                            'Rp ${widget.price}K',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                                color: secondaryColor),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      // * rating
+                      Row(
+                        children: [
+                          // * star icon
+                          Icon(
+                            Icons.star,
+                            color: Colors.yellow[800],
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          // * number
+                          Text(
+                            widget.rating,
+                            style: TextStyle(
+                                color: Colors.grey[600],
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      // * description
                       Text(
-                        widget.rating,
+                        textAlign: TextAlign.justify,
+                        widget.decs,
                         style: TextStyle(
-                            color: Colors.grey[600],
-                            fontWeight: FontWeight.bold),
+                          color: Colors.grey[600],
+                          fontSize: 14,
+                          height: 2,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 25,
+                      ),
+
+                      // * reference
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Package Gallery',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: SizedBox(
+                    height: 200,
+                    child: PackageGallery(type: widget.name),
                   ),
-                  // * description
-                  Text(
-                    textAlign: TextAlign.justify,
-                    widget.decs,
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 14,
-                      height: 2,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-
-                  // * reference
-                  const Text(
-                    'Package Gallery',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  // // * gallery
-                  // const SizedBox(
-                  //   height: 330,
-                  //   child: PackageCard(),
-                  // ),
-                  // const SizedBox(
-                  //   height: 25,
-                  // )
-                ],
-              ),
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+              ],
             ),
           ),
           // * price and buttton
@@ -167,8 +179,6 @@ class _PackagesDetailsState extends State<PackagesDetails> {
               padding: const EdgeInsets.all(25),
               child: Column(
                 children: [
-                  // * price
-
                   // * button
                   MyButton(
                     isVisible: true,

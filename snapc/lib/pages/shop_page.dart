@@ -86,6 +86,7 @@ class _ShopPageState extends State<ShopPage> {
             right: 25,
           ),
           child: Divider(
+            thickness: 1,
             color: Colors.grey[200],
           ),
         )
