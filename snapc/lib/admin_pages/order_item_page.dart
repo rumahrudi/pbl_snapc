@@ -15,11 +15,13 @@ class OrderItemEdit extends StatefulWidget {
   final String email;
   final String docId;
   final String orderOn;
+  final String status;
   const OrderItemEdit({
     super.key,
     required this.email,
     required this.docId,
     required this.orderOn,
+    required this.status,
   });
 
   @override
@@ -35,6 +37,17 @@ class _OrderItemEditState extends State<OrderItemEdit> {
 
   // * global key
   GlobalKey<FormState> key = GlobalKey();
+
+  // * if status
+  bool shouldShowButton(List<String> allowedStatusList) {
+    String lowerCaseStatus = widget.status.toLowerCase();
+    for (String allowedStatus in allowedStatusList) {
+      if (lowerCaseStatus == allowedStatus.toLowerCase()) {
+        return false;
+      }
+    }
+    return true;
+  }
 
   // * open whatsapp
   void openWhatsApp(String phoneNumber, String message) async {
@@ -102,6 +115,36 @@ class _OrderItemEditState extends State<OrderItemEdit> {
         });
       }
     });
+  }
+
+  // * show image proof
+  void showFullScreenImageDialog(BuildContext context, String imageUrl) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: secondaryColor,
+          content: Container(
+            width: double.maxFinite,
+            child: Image.network(
+              imageUrl,
+              fit: BoxFit.contain,
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                'Close',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   //* Function to show AlertDialog
@@ -529,8 +572,11 @@ class _OrderItemEditState extends State<OrderItemEdit> {
                           isVisible: true,
                         ),
                         MyTileButton(
-                            onTap: () {},
-                            isVisible: true,
+                            onTap: () {
+                              showFullScreenImageDialog(
+                                  context, ordersData['proofPayment']);
+                            },
+                            isVisible: shouldShowButton(['Payment']),
                             icon: Icons.photo_album,
                             title: 'Show Proof Image',
                             subtitle: 'Tap to show image',

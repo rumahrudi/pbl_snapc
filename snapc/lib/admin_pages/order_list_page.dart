@@ -65,6 +65,7 @@ class _OrderListState extends State<OrderList> {
                               docId: docId,
                               orderOn: DateFormat('EEEE, MMMM d, y')
                                   .format(orderDateTime),
+                              status: status,
                             ),
                           ),
                         );

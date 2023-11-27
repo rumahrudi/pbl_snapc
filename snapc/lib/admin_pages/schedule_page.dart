@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:snapc/admin_pages/shedule_list_page.dart';
-import 'package:snapc/admin_pages/upload_ref.dart';
 import 'package:snapc/components/list_tile_button.dart';
 import 'package:snapc/components/my_app_bar.dart';
 
@@ -106,20 +105,6 @@ class _ShcedulePageState extends State<ShcedulePage> {
                 colorTile: Colors.green[100],
                 color: Colors.green,
                 isVisible: true,
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MyUpload(),
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.image),
               ),
             ],
           ),

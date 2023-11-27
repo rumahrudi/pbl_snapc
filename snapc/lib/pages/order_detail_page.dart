@@ -99,7 +99,7 @@ class _OrderDetailsState extends State<OrderDetails> {
     }
   }
 
-  // * if status = payment
+  // * if status
   bool shouldShowButton(List<String> allowedStatusList) {
     String lowerCaseStatus = widget.status.toLowerCase();
     for (String allowedStatus in allowedStatusList) {

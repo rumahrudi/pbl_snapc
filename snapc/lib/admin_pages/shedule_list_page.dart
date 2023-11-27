@@ -66,6 +66,7 @@ class _ScheduleListState extends State<ScheduleList> {
                               docId: docId,
                               orderOn: DateFormat('EEEE, MMMM d, y')
                                   .format(orderDateTime),
+                              status: status,
                             ),
                           ),
                         );

@@ -130,6 +130,7 @@ class FirestoreService {
   Stream<QuerySnapshot> getOrdersSchedule(String? date) {
     final ordersSchedule = orders
         .where('date', isEqualTo: date)
+        .where('status', isEqualTo: 'Photo session')
         .orderBy('timeStamp', descending: true)
         .snapshots();
 
@@ -140,7 +141,7 @@ class FirestoreService {
   Stream<QuerySnapshot> getGalleryStream(String? type) {
     final galleryStream = gallery
         .where('type', isEqualTo: type)
-        // .orderBy('timeStamp', descending: true)
+        .orderBy('timeStamp', descending: true)
         .snapshots();
 
     return galleryStream;
