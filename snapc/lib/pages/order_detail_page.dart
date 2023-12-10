@@ -470,17 +470,29 @@ class _OrderDetailsState extends State<OrderDetails> {
                     // * note confirmation
                     MyNote(
                         isVisible: shouldShowButton(['confirmation']),
-                        note: 'Please wait confirmation payment from admin'),
+                        note:
+                            'You can make a refund before entering photo session status. Please wait confirmation payment from admin!'),
                     // * note payment
                     MyNote(
                       isVisible: shouldShowButton(['payment']),
                       note:
                           'Please make Payment according to the selected payment method and upload your proof!',
                     ),
+                    // * note photo session
                     MyNote(
                         isVisible: shouldShowButton(['photo session']),
                         note:
                             'Please come to the photo studio according to your schedule on ${widget.date}'),
+                    // * note schedule
+                    MyNote(
+                        isVisible: shouldShowButton(['schedule']),
+                        note:
+                            'You can make a refund before entering photo session status. If you encounter problems with scheduling, please contact the admin via the chat feature below!'),
+                    // * note finish
+                    MyNote(
+                        isVisible: shouldShowButton(['finish']),
+                        note:
+                            'If you experience problems, please contact the admin via the chat feature below'),
 
                     MyTileButton(
                         onTap: _pickImage,
@@ -572,6 +584,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                         },
                         isVisible: shouldShowButton([
                           'payment',
+                          'confirmation',
                           'schedule',
                           'editing',
                           'finish',

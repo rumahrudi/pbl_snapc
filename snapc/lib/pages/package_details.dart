@@ -98,29 +98,29 @@ class _PackagesDetailsState extends State<PackagesDetails> {
                           )
                         ],
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      // * rating
-                      Row(
-                        children: [
-                          // * star icon
-                          Icon(
-                            Icons.star,
-                            color: Colors.yellow[800],
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          // * number
-                          Text(
-                            widget.rating,
-                            style: TextStyle(
-                                color: Colors.grey[600],
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
+                      // const SizedBox(
+                      //   height: 10,
+                      // ),
+                      // // * rating
+                      // Row(
+                      //   children: [
+                      //     // * star icon
+                      //     Icon(
+                      //       Icons.star,
+                      //       color: Colors.yellow[800],
+                      //     ),
+                      //     const SizedBox(
+                      //       width: 5,
+                      //     ),
+                      //     // * number
+                      //     Text(
+                      //       widget.rating,
+                      //       style: TextStyle(
+                      //           color: Colors.grey[600],
+                      //           fontWeight: FontWeight.bold),
+                      //     ),
+                      //   ],
+                      // ),
                       const SizedBox(
                         height: 10,
                       ),

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:snapc/components/my_button.dart';
 import 'package:snapc/components/my_textfield.dart';
 import 'package:snapc/theme/colors.dart';
@@ -75,7 +76,17 @@ class _LoginPageState extends State<LoginPage> {
                       height: 150,
                     ),
                     const SizedBox(
-                      height: 50,
+                      height: 15,
+                    ),
+                    Text(
+                      'Snap Cuisine',
+                      style: GoogleFonts.dmSerifDisplay(
+                        fontSize: 28,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 25,
                     ),
                     // welcome back
 
@@ -88,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
 
                     const SizedBox(
-                      height: 50,
+                      height: 25,
                     ),
                     // username
                     MyTextField(
